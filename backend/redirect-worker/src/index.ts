@@ -46,6 +46,21 @@ function generateShortCode(length: number = 8): string {
 }
 
 /**
+ * Normalize URL - add https:// if no protocol is provided
+ */
+function normalizeUrl(url: string): string {
+  const trimmed = url.trim();
+  
+  // If URL already has a protocol, return as-is
+  if (trimmed.match(/^https?:\/\//i)) {
+    return trimmed;
+  }
+  
+  // Add https:// prefix if no protocol
+  return `https://${trimmed}`;
+}
+
+/**
  * Validate URL format
  */
 function isValidUrl(url: string): boolean {
@@ -55,6 +70,37 @@ function isValidUrl(url: string): boolean {
   } catch {
     return false;
   }
+}
+
+/**
+ * CORS headers
+ */
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Max-Age': '86400',
+};
+
+/**
+ * Handle CORS preflight (OPTIONS) requests
+ */
+function handleCorsPreflight(): Response {
+  return new Response(null, {
+    status: 204,
+    headers: corsHeaders,
+  });
+}
+
+/**
+ * Add CORS headers to a response
+ */
+function addCorsHeaders(response: Response): Response {
+  const newResponse = new Response(response.body, response);
+  Object.entries(corsHeaders).forEach(([key, value]) => {
+    newResponse.headers.set(key, value);
+  });
+  return newResponse;
 }
 
 /**
@@ -95,17 +141,21 @@ async function handleShorten(
     const { longUrl } = body;
 
     if (!longUrl || typeof longUrl !== 'string') {
-      return new Response(
+      return addCorsHeaders(new Response(
         JSON.stringify({ error: 'Missing or invalid longUrl' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
+      ));
     }
 
-    if (!isValidUrl(longUrl)) {
-      return new Response(
+    // Normalize URL (add https:// if no protocol)
+    const normalizedUrl = normalizeUrl(longUrl);
+
+    // Validate normalized URL
+    if (!isValidUrl(normalizedUrl)) {
+      return addCorsHeaders(new Response(
         JSON.stringify({ error: 'Invalid URL format' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
+      ));
     }
 
     // Generate unique short code
@@ -123,14 +173,14 @@ async function handleShorten(
     } while (attempts < maxAttempts);
 
     if (attempts >= maxAttempts) {
-      return new Response(
+      return addCorsHeaders(new Response(
         JSON.stringify({ error: 'Failed to generate unique code' }),
         { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
+      ));
     }
 
-    // Store in KV
-    await env.KV_URLS.put(code, longUrl);
+    // Store normalized URL in KV
+    await env.KV_URLS.put(code, normalizedUrl);
 
     // Get the request URL to construct short URL
     const url = new URL(request.url);
@@ -138,18 +188,18 @@ async function handleShorten(
 
     const response: ShortenResponse = {
       shortUrl,
-      longUrl,
+      longUrl: normalizedUrl,
     };
 
-    return new Response(JSON.stringify(response), {
+    return addCorsHeaders(new Response(JSON.stringify(response), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
-    });
+    }));
   } catch (error) {
-    return new Response(
+    return addCorsHeaders(new Response(
       JSON.stringify({ error: 'Internal server error' }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    ));
   }
 }
 
@@ -168,10 +218,10 @@ async function handleRedirect(
   const longUrl = await env.KV_URLS.get(code);
 
   if (!longUrl) {
-    return new Response(
+    return addCorsHeaders(new Response(
       JSON.stringify({ error: 'Short URL not found' }),
       { status: 404, headers: { 'Content-Type': 'application/json' } }
-    );
+    ));
   }
 
   // Calculate redirect time
@@ -184,7 +234,7 @@ async function handleRedirect(
       longUrl,
       timestamp: Date.now(),
       redirectTimeMs: redirectTime,
-      region: request.cf?.colo,
+      region: request.cf?.colo ? String(request.cf.colo) : undefined,
       version: 'v1.0.0', // Could be read from env or KV
     })
   );
@@ -205,6 +255,11 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
+    // Handle CORS preflight
+    if (request.method === 'OPTIONS') {
+      return handleCorsPreflight();
+    }
+
     // POST /api/shorten
     if (request.method === 'POST' && path === '/api/shorten') {
       return handleShorten(request, env);
@@ -220,10 +275,10 @@ export default {
     }
 
     // 404 for unknown routes
-    return new Response(
+    return addCorsHeaders(new Response(
       JSON.stringify({ error: 'Not found' }),
       { status: 404, headers: { 'Content-Type': 'application/json' } }
-    );
+    ));
   },
 };
 

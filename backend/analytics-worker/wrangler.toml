@@ -4,6 +4,6 @@ compatibility_date = "2025-01-01"
 minify = true
 
 kv_namespaces = [
-  { binding = "KV_ANALYTICS", id = "..." }
+  { binding = "KV_ANALYTICS", id = "d0139bad4e1f4f4093a40d74de70240f", preview_id = "62b17a3ec3f44fe1920298f834a2d96d" }
 ]
 

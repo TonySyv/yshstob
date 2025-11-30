@@ -4,7 +4,7 @@ compatibility_date = "2025-01-01"
 minify = true
 
 kv_namespaces = [
-  { binding = "KV_URLS", id = "..." }
+  { binding = "KV_URLS", id = "3efb8902d43f4765b68efa9e9016e16a", preview_id = "6616768330f04b4c91b297337d594d1a" }
 ]
 
 # Environment variable for Analytics Worker URL

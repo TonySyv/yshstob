@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getSpeedometerData, SpeedometerData } from '../lib/api';
+import { getSpeedometerData, type SpeedometerData } from '../lib/api';
 
 export default function Speedometer() {
   const [data, setData] = useState<SpeedometerData | null>(null);

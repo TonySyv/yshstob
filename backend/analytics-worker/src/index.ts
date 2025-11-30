@@ -59,6 +59,37 @@ const DEFAULT_COUNTERS: Counters = {
 };
 
 /**
+ * CORS headers
+ */
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Max-Age': '86400',
+};
+
+/**
+ * Handle CORS preflight (OPTIONS) requests
+ */
+function handleCorsPreflight(): Response {
+  return new Response(null, {
+    status: 204,
+    headers: corsHeaders,
+  });
+}
+
+/**
+ * Add CORS headers to a response
+ */
+function addCorsHeaders(response: Response): Response {
+  const newResponse = new Response(response.body, response);
+  Object.entries(corsHeaders).forEach(([key, value]) => {
+    newResponse.headers.set(key, value);
+  });
+  return newResponse;
+}
+
+/**
  * Read counters from KV
  */
 async function readCounters(env: Env): Promise<Counters> {
@@ -132,10 +163,10 @@ async function handleAnalyticsRedirect(
 
     // Validate event
     if (!event.code || !event.longUrl || !event.timestamp) {
-      return new Response(
+      return addCorsHeaders(new Response(
         JSON.stringify({ error: 'Invalid event data' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
+      ));
     }
 
     // Read current counters
@@ -150,15 +181,15 @@ async function handleAnalyticsRedirect(
       total_ms: counters.total_ms + redirectTimeMs,
     });
 
-    return new Response(
+    return addCorsHeaders(new Response(
       JSON.stringify({ success: true }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
-    );
+    ));
   } catch (error) {
-    return new Response(
+    return addCorsHeaders(new Response(
       JSON.stringify({ error: 'Internal server error' }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    ));
   }
 }
 
@@ -178,15 +209,15 @@ async function handleSpeedometer(env: Env): Promise<Response> {
       average_redirect_ms: Math.round(averageMs * 1000) / 1000, // Round to 3 decimal places
     };
 
-    return new Response(JSON.stringify(response), {
+    return addCorsHeaders(new Response(JSON.stringify(response), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
-    });
+    }));
   } catch (error) {
-    return new Response(
+    return addCorsHeaders(new Response(
       JSON.stringify({ error: 'Internal server error' }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    ));
   }
 }
 
@@ -202,10 +233,10 @@ async function handleDeployMetadata(
 
     // Validate metadata
     if (!metadata.version || !metadata.deploy_timestamp) {
-      return new Response(
+      return addCorsHeaders(new Response(
         JSON.stringify({ error: 'Missing required fields: version, deploy_timestamp' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
+      ));
     }
 
     // Update metadata in KV
@@ -215,15 +246,15 @@ async function handleDeployMetadata(
       commit_summary: metadata.commit_summary || 'No commit message',
     });
 
-    return new Response(
+    return addCorsHeaders(new Response(
       JSON.stringify({ success: true }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
-    );
+    ));
   } catch (error) {
-    return new Response(
+    return addCorsHeaders(new Response(
       JSON.stringify({ error: 'Internal server error' }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    ));
   }
 }
 
@@ -238,6 +269,11 @@ export default {
   ): Promise<Response> {
     const url = new URL(request.url);
     const path = url.pathname;
+
+    // Handle CORS preflight
+    if (request.method === 'OPTIONS') {
+      return handleCorsPreflight();
+    }
 
     // POST /analytics/redirect
     if (request.method === 'POST' && path === '/analytics/redirect') {
@@ -255,10 +291,10 @@ export default {
     }
 
     // 404 for unknown routes
-    return new Response(
+    return addCorsHeaders(new Response(
       JSON.stringify({ error: 'Not found' }),
       { status: 404, headers: { 'Content-Type': 'application/json' } }
-    );
+    ));
   },
 };
 

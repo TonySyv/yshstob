@@ -182,6 +182,20 @@ backend/
     tsconfig.json       # TypeScript config
 ```
 
+## Deployment Status
+
+✅ **Both workers are deployed and operational:**
+
+- **Redirect Worker**: https://redirect-worker.tony-syv.workers.dev
+- **Analytics Worker**: https://analytics-worker.tony-syv.workers.dev
+
+### KV Namespaces Created:
+- **KV_URLS**: `3efb8902d43f4765b68efa9e9016e16a` (production), `6616768330f04b4c91b297337d594d1a` (preview)
+- **KV_ANALYTICS**: `d0139bad4e1f4f4093a40d74de70240f` (production), `62b17a3ec3f44fe1920298f834a2d96d` (preview)
+
+### Environment Variables:
+- **ANALYTICS_WORKER_URL**: Set in Redirect Worker secrets
+
 ## Notes
 
 - Both workers use TypeScript and are minified for production
