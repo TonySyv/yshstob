@@ -1,0 +1,13 @@
+name = "redirect-worker"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+minify = true
+
+kv_namespaces = [
+  { binding = "KV_URLS", id = "..." }
+]
+
+# Environment variable for Analytics Worker URL
+# Set via: wrangler secret put ANALYTICS_WORKER_URL
+# Or in production: wrangler secret put ANALYTICS_WORKER_URL --env production
+

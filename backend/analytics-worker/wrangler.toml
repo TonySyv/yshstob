@@ -1,0 +1,9 @@
+name = "analytics-worker"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+minify = true
+
+kv_namespaces = [
+  { binding = "KV_ANALYTICS", id = "..." }
+]
+
