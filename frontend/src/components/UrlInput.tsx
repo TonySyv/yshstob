@@ -17,6 +17,11 @@ export default function UrlInput({ onSubmit, isLoading = false }: UrlInputProps)
   const inputContainerRef = useRef<HTMLDivElement>(null);
   const updateTimeoutRef = useRef<number | null>(null);
 
+  // Auto-focus input on mount
+  useEffect(() => {
+    domainInputRef.current?.focus();
+  }, []);
+
   // Update arrow position with debouncing to prevent flicker during rapid typing
   const updateArrowPosition = useCallback((charPosition: number) => {
     // Clear any pending updates
@@ -112,17 +117,17 @@ export default function UrlInput({ onSubmit, isLoading = false }: UrlInputProps)
   const canSubmit = domain.trim().length > 0 && !isLoading;
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-2xl">
+    <form onSubmit={handleSubmit} className="w-full">
       <div className="flex flex-col gap-2">
         {/* Split Input Fields */}
         <div 
           ref={inputContainerRef}
-          className="flex items-center gap-0 rounded-lg border border-gray-300 dark:border-gray-600 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent bg-white dark:bg-gray-800 transition-all overflow-hidden relative"
+          className="flex items-center gap-0 rounded-xl border border-gray-200 dark:border-gray-700 focus-within:ring-2 focus-within:ring-blue-500/50 focus-within:border-blue-500/50 bg-white dark:bg-gray-800 transition-all overflow-hidden relative shadow-sm"
         >
           {/* Protocol Field (Read-only) */}
           <div 
             ref={protocolFieldRef}
-            className="px-4 py-3 bg-gray-50 dark:bg-gray-700 border-r border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 font-mono text-sm select-none flex-shrink-0"
+            className="px-4 py-3 bg-gray-50/80 dark:bg-gray-700/80 border-r border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 font-mono text-sm select-none flex-shrink-0 min-w-fit"
             title="Protocol (read-only)"
           >
             {protocol}
@@ -137,7 +142,7 @@ export default function UrlInput({ onSubmit, isLoading = false }: UrlInputProps)
               onChange={handleDomainChange}
               onPaste={handleDomainPaste}
               placeholder="example.com/path"
-              className="w-full px-4 py-3 bg-transparent border-0 focus:outline-none text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 overflow-x-auto"
+              className="w-full px-4 py-3 bg-transparent border-0 focus:outline-none text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 text-sm"
               disabled={isLoading}
               autoComplete="off"
               spellCheck="false"
@@ -158,13 +163,17 @@ export default function UrlInput({ onSubmit, isLoading = false }: UrlInputProps)
           </div>
         </div>
 
-        {/* Error Indicator */}
-        {tldError && inputContainerRef.current && (
-          <div
-            ref={errorContainerRef}
-            className="relative mt-2 animate-in fade-in slide-in-from-top-2 duration-200"
-          >
-            {/* Arrow pointing to error position */}
+        {/* Error Indicator - Always rendered to reserve space */}
+        <div
+          ref={errorContainerRef}
+          className={`relative mt-2 min-h-[80px] transition-opacity duration-200 ${
+            tldError && inputContainerRef.current
+              ? 'opacity-100 visible'
+              : 'opacity-0 invisible'
+          }`}
+        >
+          {/* Arrow pointing to error position */}
+          {tldError && inputContainerRef.current && (
             <div
               className="absolute bottom-full mb-1 transition-all duration-200 z-10 pointer-events-none"
               style={{
@@ -188,12 +197,14 @@ export default function UrlInput({ onSubmit, isLoading = false }: UrlInputProps)
                 />
               </svg>
             </div>
+          )}
 
-            {/* Error Message */}
-            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg px-4 py-3 text-amber-800 dark:text-amber-200 text-sm">
+          {/* Error Message */}
+          {tldError && (
+            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200/60 dark:border-amber-800/60 rounded-lg px-3.5 py-2.5 text-amber-800 dark:text-amber-200 text-sm">
               <div className="flex items-start gap-2">
                 <svg
-                  className="w-5 h-5 flex-shrink-0 mt-0.5"
+                  className="w-4 h-4 flex-shrink-0 mt-0.5"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -204,23 +215,38 @@ export default function UrlInput({ onSubmit, isLoading = false }: UrlInputProps)
                   />
                 </svg>
                 <div>
-                  <p className="font-medium">{tldError.message}</p>
-                  <p className="text-xs mt-1 text-amber-700 dark:text-amber-300">
+                  <p className="font-medium text-xs">{tldError.message}</p>
+                  <p className="text-xs mt-0.5 text-amber-700/80 dark:text-amber-300/80">
                     You can still submit, but the URL may not work correctly.
                   </p>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* Submit Button */}
         <button
           type="submit"
           disabled={!canSubmit}
-          className="px-8 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium transition-colors duration-200 shadow-md hover:shadow-lg self-start"
+          className="px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50 text-white text-sm font-medium transition-all duration-150 shadow-sm hover:shadow-md self-start flex items-center gap-2"
         >
-          {isLoading ? 'Shortening...' : 'Shorten'}
+          {isLoading ? (
+            <>
+              <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span>Shortening...</span>
+            </>
+          ) : (
+            <>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+              <span>Shorten URL</span>
+            </>
+          )}
         </button>
       </div>
     </form>

@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { createShortUrl } from '../lib/api';
 import UrlInput from '../components/UrlInput';
 import ShortUrlResult from '../components/ShortUrlResult';
+import { useRandomTagline } from '../hooks/useRandomTagline';
 
 export default function Home() {
+  const tagline = useRandomTagline();
   const [shortUrl, setShortUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,20 +27,27 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
-      <div className="w-full max-w-3xl text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-          URL Shortener
-        </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
-          Transform long URLs into short, shareable links
-        </p>
+    <div className="min-h-screen flex flex-col items-center justify-start px-4 pt-6 sm:pt-12 pb-12">
+      <div className="w-full max-w-2xl">
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-1.5">
+            URL Shortener
+          </h1>
+          <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">
+            {tagline || 'Transform long URLs into short, shareable links'}
+          </p>
+        </div>
 
         <UrlInput onSubmit={handleSubmit} isLoading={isLoading} />
 
         {error && (
-          <div className="mt-6 p-4 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 rounded-lg text-red-700 dark:text-red-400">
-            {error}
+          <div className="mt-4 p-3.5 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 rounded-lg text-red-700 dark:text-red-400 text-sm animate-[fadeIn_0.2s_ease-out]">
+            <div className="flex items-start gap-2">
+              <svg className="w-4 h-4 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+              <span>{error}</span>
+            </div>
           </div>
         )}
 
