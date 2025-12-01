@@ -1,158 +1,94 @@
 /**
- * URL parsing and validation utilities
+ * URL parsing and validation utilities using native browser URL() API
  */
 
-export interface ParsedUrl {
-  protocol: string;
-  domain: string;
-  fullUrl: string;
+import type { UrlFlags, PatternType } from '../types/urlPersonality';
+
+/**
+ * Parse URL using native browser URL() API
+ * Attempts to parse as-is, then tries with https:// prefix if that fails
+ */
+export function parseUrl(input: string): URL | null {
+  const trimmed = input.trim();
+  if (!trimmed) return null;
+
+  try {
+    return new URL(trimmed);
+  } catch {
+    try {
+      return new URL('https://' + trimmed);
+    } catch {
+      return null;
+    }
+  }
 }
 
 /**
- * Parse URL into protocol and domain/path components
+ * Extract boolean flags from a parsed URL object
  */
-export function parseUrl(input: string): ParsedUrl {
-  const trimmed = input.trim();
-  
-  // Check if URL has protocol
-  const protocolMatch = trimmed.match(/^(https?:\/\/)/i);
-  
-  if (protocolMatch) {
-    // URL has protocol - split it
-    const protocol = protocolMatch[1].toLowerCase();
-    const domain = trimmed.substring(protocol.length);
-    return {
-      protocol,
-      domain,
-      fullUrl: trimmed,
-    };
+export function getUrlFlags(parsed: URL | null): UrlFlags {
+  if (!parsed) {
+    return { valid: false };
   }
+
+  const hostname = parsed.hostname;
+  const hasTld = hostname.includes('.');
+  const isIp = /^[0-9.]+$/.test(hostname);
+  const isLocalhost = hostname.toLowerCase() === 'localhost' || hostname.startsWith('localhost:');
   
-  // Check for protocol-relative URL (//example.com)
-  if (trimmed.startsWith('//')) {
-    return {
-      protocol: 'https://',
-      domain: trimmed.substring(2),
-      fullUrl: `https://${trimmed.substring(2)}`,
-    };
-  }
-  
-  // No protocol - default to https://
+  // A URL is only valid if it has a TLD, is an IP address, or is localhost
+  const isValid = hasTld || isIp || isLocalhost;
+
   return {
-    protocol: 'https://',
-    domain: trimmed,
-    fullUrl: `https://${trimmed}`,
+    valid: isValid,
+    hasProtocol: parsed.protocol === 'http:' || parsed.protocol === 'https:',
+    isHttp: parsed.protocol === 'http:',
+    isHttps: parsed.protocol === 'https:',
+    hasTld,
+    tld: hostname.split('.').pop(),
+    isIp,
+    isLong: parsed.href.length > 200,
+    isVeryLong: parsed.href.length > 500,
+    hasQuery: parsed.search.length > 0,
+    hasUtm: parsed.search.includes('utm_'),
+    hasFragment: parsed.hash.length > 0,
+    isLikelyLogin: /login|signin|auth/i.test(parsed.pathname),
+    isLikelyAdmin: /admin|dashboard/i.test(parsed.pathname),
+    hasMultipleSubdomains: hostname.split('.').length > 3,
   };
 }
 
 /**
- * Validate if domain has a TLD (Top-Level Domain)
- * Returns null if valid, or error info if missing TLD
+ * Detect the structural pattern of a URL based on its flags
  */
-export interface TldError {
-  hasError: true;
-  message: string;
-  position: number; // Character position where TLD should be
-}
+export function detectStructurePattern(flags: UrlFlags): PatternType {
+  if (!flags.valid) {
+    // Try to determine why it's invalid
+    if (!flags.hasTld) return 'missingTld';
+    if (!flags.hasProtocol) return 'missingProtocol';
+    return 'invalid_general';
+  }
 
-export function validateTld(domain: string): TldError | null {
-  if (!domain || domain.trim() === '') {
-    return null; // Empty domain is handled elsewhere
-  }
-  
-  // Remove leading/trailing slashes and whitespace
-  const cleanDomain = domain.trim().replace(/^\/+|\/+$/g, '');
-  
-  if (!cleanDomain) {
-    return null;
-  }
-  
-  // Extract the hostname part (before first /, ?, or #)
-  const hostnameMatch = cleanDomain.match(/^([^\/\?#]+)/);
-  if (!hostnameMatch) {
-    return null;
-  }
-  
-  const hostname = hostnameMatch[1];
-  
-  // Check for IP address (e.g., 192.168.1.1 or [::1])
-  if (/^(\d+\.){3}\d+$/.test(hostname) || /^\[.+\]$/.test(hostname)) {
-    return null; // IP addresses don't need TLD validation
-  }
-  
-  // Check for localhost
-  if (hostname.toLowerCase() === 'localhost' || hostname.startsWith('localhost:')) {
-    return null; // localhost is valid
-  }
-  
-  // Check if hostname has a dot (indicating potential TLD)
-  // Valid TLDs: .com, .net, .org, .co.uk, .com.au, etc.
-  // At minimum, we need at least one dot
-  if (!hostname.includes('.')) {
-    // No dot found - missing TLD
-    return {
-      hasError: true,
-      message: 'URL is missing the top-level domain (TLD) like .com, .net, .org',
-      position: hostname.length,
-    };
-  }
-  
-  // Check if the part after the last dot looks like a TLD
-  const parts = hostname.split('.');
-  const lastPart = parts[parts.length - 1];
-  
-  // TLD should be at least 2 characters (e.g., .com, .uk, .io)
-  // But could be longer (e.g., .museum, .technology)
-  // Also check for port numbers (e.g., example.com:8080)
-  const tldPart = lastPart.split(':')[0];
-  
-  if (tldPart.length < 2) {
-    // TLD too short
-    return {
-      hasError: true,
-      message: 'URL is missing the top-level domain (TLD) like .com, .net, .org',
-      position: hostname.length - lastPart.length,
-    };
-  }
-  
-  // Basic validation: TLD should be alphanumeric
-  if (!/^[a-z0-9-]+$/i.test(tldPart)) {
-    return {
-      hasError: true,
-      message: 'URL is missing the top-level domain (TLD) like .com, .net, .org',
-      position: hostname.length - lastPart.length,
-    };
-  }
-  
-  return null; // Valid TLD found
+  if (flags.isVeryLong) return 'insanely_long';
+  if (flags.hasUtm) return 'utm_tracking';
+  if (flags.isLikelyLogin) return 'login_page';
+  if (flags.isLikelyAdmin) return 'admin_page';
+  if (flags.isIp) return 'ip_address';
+
+  return 'valid';
 }
 
 /**
  * Normalize URL by combining protocol and domain
+ * (Kept for backward compatibility with existing code)
  */
 export function normalizeUrl(protocol: string, domain: string): string {
   const cleanProtocol = protocol.trim();
   const cleanDomain = domain.trim();
-  
+
   // Remove protocol from domain if it was accidentally included
   const domainWithoutProtocol = cleanDomain.replace(/^https?:\/\//i, '');
-  
+
   // Combine protocol and domain
   return `${cleanProtocol}${domainWithoutProtocol}`;
 }
-
-/**
- * Calculate the character position in the input field where error should point
- * This accounts for the protocol field width
- */
-export function getErrorPositionInInput(
-  domain: string,
-  errorPosition: number,
-  protocolFieldWidth: number = 0
-): number {
-  // Error position is relative to the domain field
-  // We need to account for any visual offset from the protocol field
-  // For now, return the position as-is since we'll position the arrow relative to the domain input
-  return errorPosition;
-}
-

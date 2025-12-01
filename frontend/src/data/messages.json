@@ -1,0 +1,185 @@
+{
+  "sassy": {
+    "invalid": {
+      "missingTld": ["Where's your TLD, honey? Even I know URLs need .com or something."],
+      "missingProtocol": ["Protocol? We need those? Yes, we do. Add http:// or https://"],
+      "invalid_general": ["This URL is a mess. Try again, maybe?"]
+    },
+    "behavior": {
+      "started_typing": ["Oh, you're actually typing? Color me surprised."],
+      "cleared_all": ["Wiped it clean, huh? Starting fresh, I see."],
+      "pasted_big": ["Wow, you just pasted a novel. Impressive."],
+      "removed_tld": ["You just deleted the TLD. Bold move."],
+      "added_tld": ["Look at you, adding a TLD like you know what you're doing."],
+      "broke_validity": ["And... you broke it. Nice."],
+      "fixed_error": ["You fixed it! Maybe you're not hopeless after all."],
+      "oscillating": ["Back and forth, back and forth. Make up your mind."],
+      "typing": ["Still typing... still typing..."]
+    },
+    "valid": {
+      "default": ["Well, look at that. A valid URL. Who would've thought?"],
+      "insanely_long": ["That URL is longer than my patience. Impressive."],
+      "utm_tracking": ["UTM parameters? Someone's tracking things."],
+      "login_page": ["Login page, huh? Hope you remember your password."],
+      "admin_page": ["Admin page? Feeling powerful today?"],
+      "ip_address": ["IP address instead of domain? Old school."]
+    }
+  },
+  "bored": {
+    "invalid": {
+      "missingTld": ["Missing TLD. Yawn."],
+      "missingProtocol": ["No protocol. Whatever."],
+      "invalid_general": ["Invalid URL. Not surprised."]
+    },
+    "behavior": {
+      "started_typing": ["You started typing. Great."],
+      "cleared_all": ["Cleared it. Fine."],
+      "pasted_big": ["Big paste. Okay."],
+      "removed_tld": ["Removed TLD. Sure."],
+      "added_tld": ["Added TLD. Good for you."],
+      "broke_validity": ["Broke it. Expected."],
+      "fixed_error": ["Fixed it. Finally."],
+      "oscillating": ["Oscillating. Boring."],
+      "typing": ["Typing..."]
+    },
+    "valid": {
+      "default": ["Valid URL. Fine."],
+      "insanely_long": ["Long URL. Too long."],
+      "utm_tracking": ["UTM params. Tracking stuff."],
+      "login_page": ["Login page. Password time."],
+      "admin_page": ["Admin page. Power trip."],
+      "ip_address": ["IP address. Retro."]
+    }
+  },
+  "bruh": {
+    "invalid": {
+      "missingTld": ["Bruh, where's the TLD?"],
+      "missingProtocol": ["Bruh, no protocol?"],
+      "invalid_general": ["Bruh, this URL is broken."]
+    },
+    "behavior": {
+      "started_typing": ["Bruh, you're typing now."],
+      "cleared_all": ["Bruh, you cleared everything."],
+      "pasted_big": ["Bruh, that's a huge paste."],
+      "removed_tld": ["Bruh, you removed the TLD."],
+      "added_tld": ["Bruh, you added a TLD."],
+      "broke_validity": ["Bruh, you broke it."],
+      "fixed_error": ["Bruh, you fixed it. Nice."],
+      "oscillating": ["Bruh, stop going back and forth."],
+      "typing": ["Bruh, still typing..."]
+    },
+    "valid": {
+      "default": ["Bruh, valid URL. Good."],
+      "insanely_long": ["Bruh, that URL is way too long."],
+      "utm_tracking": ["Bruh, UTM tracking."],
+      "login_page": ["Bruh, login page."],
+      "admin_page": ["Bruh, admin page."],
+      "ip_address": ["Bruh, IP address."]
+    }
+  },
+  "bro": {
+    "invalid": {
+      "missingTld": ["Bro, you need a TLD. Let's get those gains."],
+      "missingProtocol": ["Bro, add a protocol. You got this."],
+      "invalid_general": ["Bro, this URL needs work. Time to grind."]
+    },
+    "behavior": {
+      "started_typing": ["Bro, let's go! You're typing."],
+      "cleared_all": ["Bro, fresh start. Clean slate."],
+      "pasted_big": ["Bro, that's a massive paste. Respect."],
+      "removed_tld": ["Bro, you removed the TLD. Why?"],
+      "added_tld": ["Bro, TLD added. That's the way."],
+      "broke_validity": ["Bro, you broke it. We'll fix it."],
+      "fixed_error": ["Bro, you fixed it! That's what I'm talking about."],
+      "oscillating": ["Bro, pick one and stick with it."],
+      "typing": ["Bro, keep typing. You're doing great."]
+    },
+    "valid": {
+      "default": ["Bro, valid URL. That's what we like to see."],
+      "insanely_long": ["Bro, that URL is huge. Maximum length."],
+      "utm_tracking": ["Bro, UTM tracking. Analytics gains."],
+      "login_page": ["Bro, login page. Time to authenticate."],
+      "admin_page": ["Bro, admin page. You're the boss."],
+      "ip_address": ["Bro, IP address. Direct connection."]
+    }
+  },
+  "party": {
+    "invalid": {
+      "missingTld": ["WHERE'S THE TLD?! 🎉 We need that energy!"],
+      "missingProtocol": ["NO PROTOCOL?! 🎊 Add http:// or https:// and let's GO!"],
+      "invalid_general": ["This URL is WILD! 🔥 Try again, party mode!"]
+    },
+    "behavior": {
+      "started_typing": ["YOU'RE TYPING! 🎉 LET'S GOOO!"],
+      "cleared_all": ["CLEAN SLATE! 🎊 Fresh start, baby!"],
+      "pasted_big": ["HUGE PASTE! 🚀 That's what I'm talking about!"],
+      "removed_tld": ["TLD REMOVED! 😱 Bold move!"],
+      "added_tld": ["TLD ADDED! 🎉 You're on fire!"],
+      "broke_validity": ["IT'S BROKEN! 💥 But we'll fix it!"],
+      "fixed_error": ["YOU FIXED IT! 🎊 CELEBRATION TIME!"],
+      "oscillating": ["BACK AND FORTH! 🎢 What a ride!"],
+      "typing": ["TYPING TYPING TYPING! 🎉 KEEP GOING!"]
+    },
+    "valid": {
+      "default": ["VALID URL! 🎉 PARTY TIME!"],
+      "insanely_long": ["THAT URL IS INSANE! 🔥 Maximum length achieved!"],
+      "utm_tracking": ["UTM TRACKING! 📊 Analytics party!"],
+      "login_page": ["LOGIN PAGE! 🔐 Password time!"],
+      "admin_page": ["ADMIN PAGE! 👑 You're the boss!"],
+      "ip_address": ["IP ADDRESS! 🌐 Direct connection!"]
+    }
+  },
+  "chill": {
+    "invalid": {
+      "missingTld": ["Hey, you're missing a TLD there. No worries, just add .com or something."],
+      "missingProtocol": ["Need a protocol, friend. http:// or https:// will do."],
+      "invalid_general": ["This URL isn't quite right. Take your time, you'll get it."]
+    },
+    "behavior": {
+      "started_typing": ["Alright, you're typing. Take it easy."],
+      "cleared_all": ["Cleared it out. Fresh start, nice."],
+      "pasted_big": ["That's a big paste. No rush."],
+      "removed_tld": ["Removed the TLD. It happens."],
+      "added_tld": ["Added a TLD. Looking good."],
+      "broke_validity": ["Broke it a bit. We can fix that."],
+      "fixed_error": ["Fixed it. Nice work."],
+      "oscillating": ["Going back and forth? That's cool, take your time."],
+      "typing": ["Just typing away. All good."]
+    },
+    "valid": {
+      "default": ["Valid URL. Smooth."],
+      "insanely_long": ["That's a long URL. Impressive."],
+      "utm_tracking": ["UTM parameters. Tracking things, I see."],
+      "login_page": ["Login page. Hope you remember your password."],
+      "admin_page": ["Admin page. You've got access."],
+      "ip_address": ["IP address. Direct route."]
+    }
+  },
+  "wholesome": {
+    "invalid": {
+      "missingTld": ["You're missing a TLD, but that's okay! Just add .com or .org and you'll be all set! 💕"],
+      "missingProtocol": ["Don't forget the protocol! Add http:// or https:// and you're good to go! ✨"],
+      "invalid_general": ["This URL needs a little love. You can fix it, I believe in you! 🌟"]
+    },
+    "behavior": {
+      "started_typing": ["You're typing! That's wonderful! Keep going! 💖"],
+      "cleared_all": ["Fresh start! Sometimes that's exactly what we need. You've got this! 🌸"],
+      "pasted_big": ["That's a big paste! You're doing great! 🌟"],
+      "removed_tld": ["Removed the TLD? No worries, you can add it back! 💕"],
+      "added_tld": ["You added a TLD! Great job! ✨"],
+      "broke_validity": ["It broke a bit, but that's okay! We can fix it together! 💖"],
+      "fixed_error": ["You fixed it! I'm so proud of you! 🌟"],
+      "oscillating": ["Going back and forth? That's totally fine! Take your time! 💕"],
+      "typing": ["Keep typing! You're doing amazing! ✨"]
+    },
+    "valid": {
+      "default": ["Valid URL! You did it! I'm so happy for you! 💖"],
+      "insanely_long": ["That's a very long URL! Impressive work! 🌟"],
+      "utm_tracking": ["UTM tracking parameters! You're tracking things, how smart! ✨"],
+      "login_page": ["Login page! I hope you remember your password! 💕"],
+      "admin_page": ["Admin page! You have access, that's great! 🌸"],
+      "ip_address": ["IP address! Direct connection, nice! 💖"]
+    }
+  }
+}
+
