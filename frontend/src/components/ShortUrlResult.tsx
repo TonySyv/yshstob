@@ -19,8 +19,8 @@ export default function ShortUrlResult({ shortUrl }: ShortUrlResultProps) {
 
   return (
     <div className="mt-5 w-full animate-[fadeIn_0.3s_ease-out]">
-      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 shadow-sm">
-        <div className="flex flex-col sm:flex-row gap-3 items-center">
+      <div className="p-4">
+        <div className="flex flex-col sm:flex-row gap-3">
           <div className="flex-1 min-w-0 w-full">
             <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 mb-2 uppercase tracking-wider">
               Your short URL
@@ -38,14 +38,15 @@ export default function ShortUrlResult({ shortUrl }: ShortUrlResultProps) {
               {shortUrl}
             </div>
           </div>
-          <button
-            onClick={handleCopy}
-            className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 flex items-center gap-2 ${
-              copied
-                ? 'bg-green-500 hover:bg-green-600 text-white shadow-md'
-                : 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white shadow-sm hover:shadow-md'
-            }`}
-          >
+          <div className="flex items-end">
+            <button
+              onClick={handleCopy}
+              className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 flex items-center gap-2 ${
+                copied
+                  ? 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-md'
+                  : 'bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white shadow-sm hover:shadow-md dark:bg-gray-600 dark:hover:bg-gray-700 dark:active:bg-gray-800'
+              }`}
+            >
             {copied ? (
               <>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,7 +62,8 @@ export default function ShortUrlResult({ shortUrl }: ShortUrlResultProps) {
                 <span>Copy</span>
               </>
             )}
-          </button>
+            </button>
+          </div>
         </div>
       </div>
     </div>
