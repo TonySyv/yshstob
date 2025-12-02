@@ -26,15 +26,155 @@ function normalizeForCombination(msg: string): string {
 }
 
 /**
- * Combine multiple messages gracefully
- * Creates natural-sounding combinations with better flow
+ * Check if message ends with punctuation
+ */
+function endsWithPunctuation(msg: string): boolean {
+  return /[.!?]$/.test(msg.trim());
+}
+
+/**
+ * Context-aware combination templates for common pairs
+ */
+function getContextualCombination(
+  msg1: string,
+  msg2: string,
+  behavior1: BehaviorType,
+  behavior2: BehaviorType,
+  mood: MoodType
+): string | null {
+  // Spaces + HTTP
+  if ((behavior1 === 'has_spaces' && behavior2 === 'using_http') ||
+      (behavior1 === 'using_http' && behavior2 === 'has_spaces')) {
+    const templates: Record<MoodType, string[]> = {
+      sassy: [
+        "Spaces AND http://? Double trouble, honey.",
+        "Spaces plus http://? That's a double whammy of wrong."
+      ],
+      bored: [
+        "Spaces and http://. Double issues.",
+        "Spaces plus http://. Two problems at once."
+      ],
+      bruh: [
+        "Bruh, spaces and http://? Double wrong, bruh.",
+        "Bruh, spaces plus http://. That's two issues, bruh."
+      ],
+      bro: [
+        "Bro, spaces and http://? Double trouble, bro.",
+        "Bro, spaces plus http://. Two problems, bro."
+      ],
+      party: [
+        "SPACES AND http://?! 🎊 DOUBLE TROUBLE! 💥",
+        "SPACES PLUS http://! 🎉 TWO ISSUES AT ONCE! 🔥"
+      ],
+      chill: [
+        "Spaces and http://. Two issues there, friend.",
+        "Spaces plus http://. Double trouble, but we can fix it."
+      ],
+      wholesome: [
+        "Spaces and http://? Two issues, but you can fix them! ✨",
+        "Spaces plus http://. Double trouble, but no worries! 💖"
+      ],
+    };
+    return random(templates[mood] || []);
+  }
+
+  // Too short + HTTP
+  if ((behavior1 === 'too_short' && behavior2 === 'using_http') ||
+      (behavior1 === 'using_http' && behavior2 === 'too_short')) {
+    const templates: Record<MoodType, string[]> = {
+      sassy: [
+        "Short URL with http://? At least make it secure if you're going to shorten it.",
+        "Under 30 chars AND http://? Double wrong, honey."
+      ],
+      bored: [
+        "Short URL with http://. Two issues.",
+        "Too short and http://. Double problems."
+      ],
+      bruh: [
+        "Bruh, short URL with http://? Two wrongs, bruh.",
+        "Bruh, too short and http://. Double issue."
+      ],
+      bro: [
+        "Bro, short URL with http://? At least use https://, bro.",
+        "Bro, too short and http://. Two problems, bro."
+      ],
+      party: [
+        "SHORT URL WITH http://?! 🎊 DOUBLE TROUBLE! 💥",
+        "TOO SHORT AND http://! 🎉 TWO ISSUES! 🔥"
+      ],
+      chill: [
+        "Short URL with http://. Two issues, but no worries.",
+        "Too short and http://. Double trouble, but fixable."
+      ],
+      wholesome: [
+        "Short URL with http://? Two issues, but you can fix them! ✨",
+        "Too short and http://. Double trouble, but no problem! 💖"
+      ],
+    };
+    return random(templates[mood] || []);
+  }
+
+  // Spaces + Swearwords
+  if ((behavior1 === 'has_spaces' && behavior2 === 'has_swearwords') ||
+      (behavior1 === 'has_swearwords' && behavior2 === 'has_spaces')) {
+    const templates: Record<MoodType, string[]> = {
+      sassy: [
+        "Spaces and swearwords? Classy AND wrong. Double whammy.",
+        "Spaces plus profanity? That's a mess, honey."
+      ],
+      bored: [
+        "Spaces and swearwords. Two issues.",
+        "Spaces plus profanity. Double problems."
+      ],
+      bruh: [
+        "Bruh, spaces and swearwords? Double wrong, bruh.",
+        "Bruh, spaces plus profanity. Two issues."
+      ],
+      bro: [
+        "Bro, spaces and swearwords? Keep it clean and fix the spaces, bro.",
+        "Bro, spaces plus profanity. Two problems, bro."
+      ],
+      party: [
+        "SPACES AND SWEARWORDS! 🎊 DOUBLE TROUBLE! 💥",
+        "SPACES PLUS PROFANITY! 🎉 TWO ISSUES! 🔥"
+      ],
+      chill: [
+        "Spaces and swearwords. Two issues, but fixable.",
+        "Spaces plus profanity. Double trouble, but we can sort it out."
+      ],
+      wholesome: [
+        "Spaces and swearwords? Two issues, but you can fix them! ✨",
+        "Spaces plus profanity. Keep it clean and fix the spaces! 💖"
+      ],
+    };
+    return random(templates[mood] || []);
+  }
+
+  return null;
+}
+
+/**
+ * Combine multiple messages gracefully with improved flow
  */
 function combineMessages(
   messages: string[],
+  behaviors: BehaviorType[],
   mood: MoodType
 ): string {
   if (messages.length === 0) return '';
   if (messages.length === 1) return messages[0];
+
+  // Try contextual combination for 2 messages
+  if (messages.length === 2 && behaviors.length === 2) {
+    const contextual = getContextualCombination(
+      messages[0],
+      messages[1],
+      behaviors[0],
+      behaviors[1],
+      mood
+    );
+    if (contextual) return contextual;
+  }
 
   // For 2 messages, use natural connectors
   if (messages.length === 2) {
@@ -50,8 +190,9 @@ function combineMessages(
     const connector = random(connectors[mood] || [' Also,']);
     const secondMsg = normalizeForCombination(messages[1]);
     
-    // Handle questions and exclamations better
-    if (messages[0].endsWith('?') || messages[0].endsWith('!')) {
+    // Better handling based on first message punctuation
+    const firstEndsWithPunct = endsWithPunctuation(messages[0]);
+    if (firstEndsWithPunct) {
       return `${messages[0]}${connector} ${secondMsg}`;
     }
     
@@ -87,10 +228,15 @@ function combineMessages(
     const msg2 = normalizeForCombination(messages[1]);
     const msg3 = normalizeForCombination(messages[2]);
     
+    // Handle punctuation better
+    if (endsWithPunctuation(msg1)) {
+      return `${msg1}${connector1} ${msg2}${connector2} ${msg3}`;
+    }
+    
     return `${msg1}${connector1} ${msg2}${connector2} ${msg3}`;
   }
 
-  // For 4+ messages, use a list-like structure
+  // For 4+ messages, use a list-like structure with better flow
   const firstMsg = messages[0];
   const rest = messages.slice(1);
   
@@ -109,7 +255,7 @@ function combineMessages(
     const connector = random(connectors[mood] || [' Also,']);
     const normalized = normalizeForCombination(rest[i]);
     
-    // Use "and" for the last item
+    // Use "and" for the last item for better flow
     if (i === rest.length - 1 && rest.length > 1) {
       combined += ` and ${normalized}`;
     } else {
@@ -133,6 +279,7 @@ export function pickMessage(
 ): MessageResult {
   const moodPack = messagesData[mood] as MessagesData[MoodType];
   const behaviorMessages: string[] = [];
+  const behaviorTypes: BehaviorType[] = [];
 
   // Priority 1: Collect behavior-specific messages (excluding "typing")
   const nonTypingBehaviors = behaviors.filter(b => b !== 'typing');
@@ -192,6 +339,7 @@ export function pickMessage(
       const messages = moodPack.behavior[behavior];
       if (messages && messages.length > 0) {
         behaviorMessages.push(random(messages));
+        behaviorTypes.push(behavior);
       }
     }
   }
@@ -199,7 +347,7 @@ export function pickMessage(
   // If we have behavior messages, combine and return them
   if (behaviorMessages.length > 0) {
     return {
-      message: combineMessages(behaviorMessages, mood),
+      message: combineMessages(behaviorMessages, behaviorTypes, mood),
       mood,
       behaviors,
       pattern,
