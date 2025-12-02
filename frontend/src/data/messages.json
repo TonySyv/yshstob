@@ -8,7 +8,6 @@
     "behavior": {
       "started_typing": ["Oh, you're actually typing? Color me surprised."],
       "cleared_all": ["Wiped it clean, huh? Starting fresh, I see."],
-      "pasted_big": ["Wow, you just pasted a novel. Impressive."],
       "removed_tld": ["Removed the TLD? That's... a choice. A bad one, but a choice."],
       "added_tld": ["TLD added. Progress! Who knew you had it in you?"],
       "broke_validity": ["You had it working and then... nope. What happened?"],
@@ -18,7 +17,7 @@
       "has_port": ["Custom port? Fancy. Hope you know what you're doing."],
       "using_http": ["http://? Really? It's 2024, use https:// like a civilized person."],
       "has_swearwords": ["Swearwords in a URL? Classy. Real classy."],
-      "too_short": ["That's under 30 characters. The shortened URL will be LONGER than this. But sure, go ahead I guess."],
+      "too_short": ["That's under 30 characters. The shortened URL will be LONGER than this. Defeats the whole point, but you do you."],
       "dot_without_tld": ["A dot but no TLD? That's like a sentence without punctuation."],
       "typing": ["Still typing... still typing..."]
     },
@@ -29,29 +28,31 @@
       "login_page": ["Login page? Good luck remembering which email you used."],
       "admin_page": ["Admin page? Don't break anything important."],
       "ip_address": ["Using an IP? That's so 1995. Get a domain name."]
+    },
+    "error": {
+      "404": ["404? That page doesn't exist, honey. Did you even check the URL?", "404 Not Found. That page is more lost than you are right now.", "404? That page doesn't exist. Maybe try a page that actually exists?", "404? Wrong URL, wrong page, wrong everything. Try again."]
     }
   },
   "bored": {
     "invalid": {
       "missingTld": ["Missing TLD. Yawn. Add .com or something."],
-      "missingProtocol": ["No protocol. Whatever. Add it. Or don't. I don't care."],
+      "missingProtocol": ["No protocol. Add https:// if you feel like it. Or don't. Your call."],
       "invalid_general": ["Broken URL. Expected nothing less."]
     },
     "behavior": {
       "started_typing": ["You started typing. Great."],
       "cleared_all": ["Cleared it. Fine."],
-      "pasted_big": ["Big paste. Okay."],
       "removed_tld": ["Removed TLD. Sure."],
       "added_tld": ["Added TLD. Good for you."],
       "broke_validity": ["You broke it. Shocking."],
       "fixed_error": ["Fixed it. Finally."],
       "oscillating": ["Can't decide? Typical."],
-      "has_spaces": ["Spaces in URL. Whatever."],
-      "has_port": ["Custom port. Cool."],
-      "using_http": ["http://? Not secure. Whatever."],
-      "has_swearwords": ["Swearwords. Nice."],
-      "too_short": ["Under 30 characters. Shortened version will be longer. But whatever."],
-      "dot_without_tld": ["Dot but no TLD. Expected."],
+      "has_spaces": ["Spaces in URL. URLs don't have spaces. Just saying."],
+      "has_port": ["Custom port. Fancy. Hope you know what you're doing."],
+      "using_http": ["http://? Not secure. It's 2024, upgrade to https:// already."],
+      "has_swearwords": ["Swearwords in URL. Classy move."],
+      "too_short": ["Under 30 characters. Shortened version will be longer. That's backwards, but okay."],
+      "dot_without_tld": ["Dot but no TLD. That's incomplete. Finish it."],
       "typing": ["Typing..."]
     },
     "valid": {
@@ -61,6 +62,9 @@
       "login_page": ["Login. Hope you remember it."],
       "admin_page": ["Admin access. Neat."],
       "ip_address": ["Using IP. Old school."]
+    },
+    "error": {
+      "404": ["404. Page doesn't exist. Expected nothing less.", "404 Not Found. That page is gone. Or never existed. Either way, it's not here.", "404? Wrong page. Try something else. Or don't. Your call."]
     }
   },
   "bruh": {
@@ -72,7 +76,6 @@
     "behavior": {
       "started_typing": ["Bruh, finally typing. Let's go."],
       "cleared_all": ["Bruh, deleted it all. Fresh start."],
-      "pasted_big": ["Bruh, you pasted a whole essay."],
       "removed_tld": ["Bruh, why'd you delete the TLD?"],
       "added_tld": ["Bruh, TLD added. Progress."],
       "broke_validity": ["Bruh, it was working and now it's not."],
@@ -82,7 +85,7 @@
       "has_port": ["Bruh, custom port. Interesting."],
       "using_http": ["Bruh, http://? Use https://, it's 2024."],
       "has_swearwords": ["Bruh, swearwords? Really?"],
-      "too_short": ["Bruh, under 30 characters. Shortened URL will be longer. But you do you."],
+      "too_short": ["Bruh, under 30 characters. Shortened URL will be longer. That's backwards, bruh."],
       "dot_without_tld": ["Bruh, dot but no TLD? Come on."],
       "typing": ["Bruh, still typing..."]
     },
@@ -93,6 +96,9 @@
       "login_page": ["Bruh, time to login."],
       "admin_page": ["Bruh, admin access."],
       "ip_address": ["Bruh, using IP instead of domain."]
+    },
+    "error": {
+      "404": ["Bruh, 404. That page doesn't exist. Check your URL.", "Bruh, 404 Not Found. Wrong page, bruh.", "Bruh, 404? That page is gone. Try another one."]
     }
   },
   "bro": {
@@ -104,7 +110,6 @@
     "behavior": {
       "started_typing": ["Bro, typing time! Let's do this."],
       "cleared_all": ["Bro, wiped clean. New beginning."],
-      "pasted_big": ["Bro, huge paste. That's dedication."],
       "removed_tld": ["Bro, TLD deleted. What's the plan?"],
       "added_tld": ["Bro, TLD in place. Looking good."],
       "broke_validity": ["Bro, it broke. No worries, we got this."],
@@ -114,7 +119,7 @@
       "has_port": ["Bro, custom port. Advanced move."],
       "using_http": ["Bro, http://? Time to upgrade to https://. Security matters."],
       "has_swearwords": ["Bro, keep it clean. No swearwords."],
-      "too_short": ["Bro, under 30 characters? Shortened URL will be LONGER. But if that's what you want, let's go."],
+      "too_short": ["Bro, under 30 characters? Shortened URL will be LONGER. That's the opposite of shortening, bro."],
       "dot_without_tld": ["Bro, dot without TLD? Finish the job."],
       "typing": ["Bro, typing away. Keep it up."]
     },
@@ -125,6 +130,9 @@
       "login_page": ["Bro, login time. Show your credentials."],
       "admin_page": ["Bro, admin access. You're in charge."],
       "ip_address": ["Bro, using IP. Straight to the source."]
+    },
+    "error": {
+      "404": ["Bro, 404. That page doesn't exist. Check the URL and try again.", "Bro, 404 Not Found. Wrong page, bro. Let's find the right one.", "Bro, 404? That page is gone. No worries, we got this."]
     }
   },
   "party": {
@@ -136,7 +144,6 @@
     "behavior": {
       "started_typing": ["TYPING TIME! 🎊 The party starts now!"],
       "cleared_all": ["DELETED EVERYTHING! 🎉 New beginning, let's go!"],
-      "pasted_big": ["MASSIVE PASTE! 🎉 That's the energy we need!"],
       "removed_tld": ["TLD GONE! 💥 Risky but exciting!"],
       "added_tld": ["TLD IN PLACE! 🔥 Progress party!"],
       "broke_validity": ["BROKE IT! 😱 No worries, we got this!"],
@@ -146,7 +153,7 @@
       "has_port": ["CUSTOM PORT! 🎯 Advanced move!"],
       "using_http": ["http://?! 🔒 Use https://! Security party!"],
       "has_swearwords": ["SWEARWORDS! 😱 Keep it clean!"],
-      "too_short": ["UNDER 30 CHARACTERS! 📏 Shortened URL will be LONGER! But hey, you do you! 🎉"],
+      "too_short": ["UNDER 30 CHARACTERS! 📏 Shortened URL will be LONGER! That's backwards! 🎉"],
       "dot_without_tld": ["DOT WITHOUT TLD! 🎯 Finish it!"],
       "typing": ["TYPING AWAY! 🎊 The energy is real!"]
     },
@@ -157,6 +164,9 @@
       "login_page": ["LOGIN TIME! 🎉 Show your credentials!"],
       "admin_page": ["ADMIN ACCESS! 🎊 You're in charge!"],
       "ip_address": ["USING IP! 🎉 Straight to the source!"]
+    },
+    "error": {
+      "404": ["404?! 🎊 THAT PAGE DOESN'T EXIST! Check your URL and try again! 💥", "404 NOT FOUND! 🎉 Wrong page, bro! Let's find the right one! 🔥", "404?! 🎊 That page is gone! Try another one! The party continues! 🎉"]
     }
   },
   "chill": {
@@ -168,7 +178,6 @@
     "behavior": {
       "started_typing": ["Typing now. Nice and easy."],
       "cleared_all": ["Deleted everything. Clean slate, I like it."],
-      "pasted_big": ["Big paste there. Take your time."],
       "removed_tld": ["TLD's gone. No big deal, add it back."],
       "added_tld": ["TLD added. Smooth."],
       "broke_validity": ["It broke. No worries, we'll sort it out."],
@@ -178,7 +187,7 @@
       "has_port": ["Custom port. Nice touch."],
       "using_http": ["http://? Not secure, friend. Use https:// for safety."],
       "has_swearwords": ["Swearwords? Let's keep it clean."],
-      "too_short": ["Under 30 characters. Shortened URL will be longer. But if that's what you want, no problem."],
+      "too_short": ["Under 30 characters. Shortened URL will be longer. Kind of defeats the purpose, but it's your call."],
       "dot_without_tld": ["Dot without TLD? Add the TLD and you're good."],
       "typing": ["Typing. Chill vibes."]
     },
@@ -189,6 +198,9 @@
       "login_page": ["Login time. Don't forget your credentials."],
       "admin_page": ["Admin access. You're in control."],
       "ip_address": ["Using IP. Straight connection."]
+    },
+    "error": {
+      "404": ["404. That page doesn't exist, friend. Check your URL and try again.", "404 Not Found. Wrong page, but no worries. We'll find the right one.", "404? That page is gone. No rush, try another when you're ready."]
     }
   },
   "wholesome": {
@@ -200,7 +212,6 @@
     "behavior": {
       "started_typing": ["Look at you typing! You're doing great! ✨"],
       "cleared_all": ["Cleared everything? New beginning! I'm proud of you! 💕"],
-      "pasted_big": ["Wow, that's a lot! You're handling it well! ✨"],
       "removed_tld": ["TLD gone? That's okay! You can fix it! 🌸"],
       "added_tld": ["TLD added! You're making progress! 💖"],
       "broke_validity": ["It's not working? No problem! You'll get it! 🌟"],
@@ -221,6 +232,9 @@
       "login_page": ["Time to login! Don't forget your credentials! 🌸"],
       "admin_page": ["Admin access! You're in control! 💖"],
       "ip_address": ["Using IP! Straight to the source! ✨"]
+    },
+    "error": {
+      "404": ["404? That page doesn't exist, honey. Did you even check the URL? ✨", "404 Not Found. That page is more lost than you are right now. 💕", "404? That page doesn't exist. Maybe try a page that actually exists? 🌸"]
     }
   }
 }

@@ -3,11 +3,13 @@ import App from './App';
 import Home from './pages/Home';
 import Speedometer from './pages/Speedometer';
 import Info from './pages/Info';
+import NotFound from './pages/NotFound';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <NotFound />,
     children: [
       {
         index: true,
@@ -20,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: 'info',
         element: <Info />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
       },
     ],
   },

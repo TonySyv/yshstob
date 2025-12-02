@@ -44,16 +44,20 @@ export function detectBehaviors(
     return ['cleared_all'];
   }
 
-  // Large paste detected (more than 10 characters added at once)
-  if (prev) {
-    const lengthDiff = next.value.length - prev.value.length;
-    if (lengthDiff > 10) {
-      behaviors.push('pasted_big');
-    }
-  }
+  // Detect if it's a replacement (completely different URL, not gradual editing)
+  // This helps filter out false positives for "removed_tld" and "broke_validity"
+  const isReplacement = prev && 
+    next.value.length > 0 && 
+    prev.value.length > 0 &&
+    !next.value.startsWith(prev.value) && 
+    !prev.value.startsWith(next.value);
+  
+  // Detect large changes (for filtering out transitional behaviors)
+  // Used to distinguish editing from replacement, not as a behavior itself
+  const isLargeChange = prev && Math.abs(next.value.length - prev.value.length) > 10;
 
-  // TLD changes
-  if (prev) {
+  // TLD changes - only detect if it's gradual editing, not replacement
+  if (prev && !isLargeChange && !isReplacement) {
     if (!prev.flags.hasTld && next.flags.hasTld) {
       behaviors.push('added_tld');
     }
@@ -62,8 +66,8 @@ export function detectBehaviors(
     }
   }
 
-  // Validity changes
-  if (prev) {
+  // Validity changes - only detect if it's gradual editing, not replacement
+  if (prev && !isLargeChange && !isReplacement) {
     if (!prev.flags.valid && next.flags.valid) {
       behaviors.push('fixed_error');
     }
