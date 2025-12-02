@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { parseUrl, getUrlFlags, detectStructurePattern, normalizeUrl } from '../lib/urlUtils';
-import { detectBehavior, createInitialState, updateHistory } from '../lib/behaviorDetection';
+import { detectBehaviors, createInitialState, updateHistory } from '../lib/behaviorDetection';
 import { getCurrentMood } from '../lib/moodSystem';
 import { pickMessage } from '../lib/messageEngine';
 import type { InputState, MessageResult } from '../types/urlPersonality';
@@ -26,14 +26,14 @@ export default function UrlInput({ onSubmit, isLoading = false }: UrlInputProps)
   useEffect(() => {
     const prev = history[history.length - 1] || createInitialState();
     const parsed = parseUrl(value);
-    const flags = getUrlFlags(parsed);
+    const flags = getUrlFlags(parsed, value);
     const nextState: InputState = { value, parsed, flags };
 
-    const behavior = detectBehavior(prev, nextState, history);
+    const behaviors = detectBehaviors(prev, nextState, history);
     const pattern = detectStructurePattern(flags);
     const mood = getCurrentMood();
 
-    const message = pickMessage(mood, pattern, behavior, parsed);
+    const message = pickMessage(mood, pattern, behaviors, parsed);
 
     setMessageResult(message);
     setHistory((prevHistory) => updateHistory(prevHistory, nextState));

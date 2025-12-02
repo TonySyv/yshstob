@@ -4,61 +4,111 @@
 
 import type { InputState, BehaviorType } from '../types/urlPersonality';
 
-const MAX_HISTORY_LENGTH = 20;
-
+// Keep old function name for backward compatibility, but mark as deprecated
 /**
- * Detect user behavior pattern based on previous and current input state
+ * @deprecated Use detectBehaviors instead (returns array)
  */
 export function detectBehavior(
   prev: InputState | null,
   next: InputState,
   history: InputState[]
 ): BehaviorType {
+  const behaviors = detectBehaviors(prev, next, history);
+  return behaviors[0] || 'typing';
+}
+
+const MAX_HISTORY_LENGTH = 20;
+
+/**
+ * Detect user behavior patterns based on previous and current input state
+ * Returns an array of behaviors that apply
+ */
+export function detectBehaviors(
+  prev: InputState | null,
+  next: InputState,
+  history: InputState[]
+): BehaviorType[] {
+  const behaviors: BehaviorType[] = [];
+
   // No previous state - user just started
   if (!prev || !prev.value) {
-    if (next.value) return 'started_typing';
-    return 'typing';
+    if (next.value) {
+      behaviors.push('started_typing');
+    } else {
+      return ['typing'];
+    }
   }
 
   // User cleared everything
-  if (prev.value && !next.value) {
-    return 'cleared_all';
+  if (prev && prev.value && !next.value) {
+    return ['cleared_all'];
   }
 
   // Large paste detected (more than 10 characters added at once)
-  const lengthDiff = next.value.length - prev.value.length;
-  if (lengthDiff > 10) {
-    return 'pasted_big';
+  if (prev) {
+    const lengthDiff = next.value.length - prev.value.length;
+    if (lengthDiff > 10) {
+      behaviors.push('pasted_big');
+    }
   }
 
   // TLD changes
-  if (!prev.flags.hasTld && next.flags.hasTld) {
-    return 'added_tld';
-  }
-
-  if (prev.flags.hasTld && !next.flags.hasTld) {
-    return 'removed_tld';
+  if (prev) {
+    if (!prev.flags.hasTld && next.flags.hasTld) {
+      behaviors.push('added_tld');
+    }
+    if (prev.flags.hasTld && !next.flags.hasTld) {
+      behaviors.push('removed_tld');
+    }
   }
 
   // Validity changes
-  if (!prev.flags.valid && next.flags.valid) {
-    return 'fixed_error';
-  }
-
-  if (prev.flags.valid && !next.flags.valid) {
-    return 'broke_validity';
+  if (prev) {
+    if (!prev.flags.valid && next.flags.valid) {
+      behaviors.push('fixed_error');
+    }
+    if (prev.flags.valid && !next.flags.valid) {
+      behaviors.push('broke_validity');
+    }
   }
 
   // Oscillating pattern: current value matches value from 3 steps ago
   if (history.length >= 3) {
     const threeStepsAgo = history[history.length - 3];
     if (threeStepsAgo && threeStepsAgo.value === next.value) {
-      return 'oscillating';
+      behaviors.push('oscillating');
     }
   }
 
-  // Default: just typing
-  return 'typing';
+  // New behavior patterns based on flags
+  if (next.flags.hasSpaces) {
+    behaviors.push('has_spaces');
+  }
+  // Only detect port if it's a complete port number (not incomplete)
+  if (next.flags.hasPort && next.parsed) {
+    behaviors.push('has_port');
+  }
+  if (next.flags.hasSwearwords) {
+    behaviors.push('has_swearwords');
+  }
+  // Only roast for short URLs if they're valid (roasting about shortening, not validity)
+  if (next.flags.isShort && next.flags.valid) {
+    behaviors.push('too_short');
+  }
+  if (next.flags.dotWithoutTld) {
+    behaviors.push('dot_without_tld');
+  }
+  // Roast for using http:// instead of https://
+  if (next.flags.isHttp && next.flags.valid) {
+    behaviors.push('using_http');
+  }
+
+  // If no specific behaviors detected, return typing
+  if (behaviors.length === 0) {
+    return ['typing'];
+  }
+
+  return behaviors;
 }
 
 /**

@@ -13,6 +13,12 @@ export type BehaviorType =
   | 'broke_validity'
   | 'fixed_error'
   | 'oscillating'
+  | 'has_spaces'
+  | 'has_port'
+  | 'has_swearwords'
+  | 'too_short'
+  | 'dot_without_tld'
+  | 'using_http'
   | 'typing';
 
 export type PatternType =
@@ -42,6 +48,11 @@ export interface UrlFlags {
   isLikelyLogin?: boolean;
   isLikelyAdmin?: boolean;
   hasMultipleSubdomains?: boolean;
+  hasSpaces?: boolean;
+  hasPort?: boolean;
+  hasSwearwords?: boolean;
+  isShort?: boolean;
+  dotWithoutTld?: boolean;
 }
 
 export interface InputState {
@@ -53,7 +64,7 @@ export interface InputState {
 export interface MessageResult {
   message: string;
   mood: MoodType;
-  behavior: BehaviorType;
+  behaviors: BehaviorType[];
   pattern: PatternType;
   parsed: URL | null;
 }

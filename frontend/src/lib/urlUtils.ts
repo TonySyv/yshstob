@@ -24,20 +24,56 @@ export function parseUrl(input: string): URL | null {
 }
 
 /**
+ * Check for common swearwords (basic detection)
+ */
+function hasSwearwords(text: string): boolean {
+  const swearPatterns = /\b(shit|damn|hell|fuck|ass|bitch|bastard|crap|piss)\b/gi;
+  return swearPatterns.test(text);
+}
+
+/**
  * Extract boolean flags from a parsed URL object
  */
-export function getUrlFlags(parsed: URL | null): UrlFlags {
+export function getUrlFlags(parsed: URL | null, rawInput: string = ''): UrlFlags {
   if (!parsed) {
-    return { valid: false };
+    // Check raw input for patterns even if URL parsing failed
+    const hasSpaces = /\s/.test(rawInput);
+    const portMatch = rawInput.match(/:(\d+)/);
+    const hasPort = !!portMatch && portMatch[1] && portMatch[1].length > 0;
+    const hasSwearwordsFlag = hasSwearwords(rawInput);
+    // Don't mark as short if invalid - we only roast valid short URLs
+    const isShort = false;
+    // Dot without TLD: ends with dot, or has dot followed by space/nothing, or dot without valid TLD
+    const dotWithoutTld = /\.\s*$/.test(rawInput) || /\.(?!\w{2,})/.test(rawInput);
+    
+    return {
+      valid: false,
+      hasSpaces,
+      hasPort,
+      hasSwearwords: hasSwearwordsFlag,
+      isShort,
+      dotWithoutTld,
+    };
   }
 
   const hostname = parsed.hostname;
-  const hasTld = hostname.includes('.');
+  const hasTld = hostname.includes('.') && hostname.split('.').pop() && hostname.split('.').pop()!.length >= 2;
   const isIp = /^[0-9.]+$/.test(hostname);
   const isLocalhost = hostname.toLowerCase() === 'localhost' || hostname.startsWith('localhost:');
   
+  // Check for dot without TLD (e.g., "example." or "example. " or just a dot)
+  const dotWithoutTld = hostname.endsWith('.') || (hostname.includes('.') && !hasTld);
+  
   // A URL is only valid if it has a TLD, is an IP address, or is localhost
   const isValid = hasTld || isIp || isLocalhost;
+
+  // Check raw input for additional patterns
+  const hasSpaces = /\s/.test(rawInput);
+  const portMatch = rawInput.match(/:(\d+)/);
+  const hasPort = !!portMatch && portMatch[1] && portMatch[1].length > 0;
+  const hasSwearwordsFlag = hasSwearwords(rawInput);
+  // Only mark as short if valid - we're roasting about shortening, not validity
+  const isShort = isValid && rawInput.length > 0 && rawInput.length < 30;
 
   return {
     valid: isValid,
@@ -55,6 +91,11 @@ export function getUrlFlags(parsed: URL | null): UrlFlags {
     isLikelyLogin: /login|signin|auth/i.test(parsed.pathname),
     isLikelyAdmin: /admin|dashboard/i.test(parsed.pathname),
     hasMultipleSubdomains: hostname.split('.').length > 3,
+    hasSpaces,
+    hasPort,
+    hasSwearwords: hasSwearwordsFlag,
+    isShort,
+    dotWithoutTld,
   };
 }
 
