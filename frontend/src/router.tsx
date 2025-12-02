@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
 import Home from './pages/Home';
 import Speedometer from './pages/Speedometer';
+import Info from './pages/Info';
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
       {
         path: 'speedometer',
         element: <Speedometer />,
+      },
+      {
+        path: 'info',
+        element: <Info />,
       },
     ],
   },
