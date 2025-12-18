@@ -25,10 +25,16 @@ export interface SpeedometerData {
 
 /**
  * Create a short URL from a long URL
+ * @param longUrl - The URL to shorten
+ * @param proposedCode - Optional client-generated code for optimistic UI
  */
-export async function createShortUrl(longUrl: string): Promise<ShortUrlResponse> {
+export async function createShortUrl(
+  longUrl: string,
+  proposedCode?: string
+): Promise<ShortUrlResponse> {
   const response = await redirectApi.post<ShortUrlResponse>('/api/shorten', {
     longUrl,
+    proposedCode,
   });
   return response.data;
 }

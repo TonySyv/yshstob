@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createShortUrl } from '../lib/api';
+import { generateShortCode } from '../lib/codeGenerator';
 import UrlInput from '../components/UrlInput';
 import ShortUrlResult from '../components/ShortUrlResult';
 import { useRandomTagline } from '../hooks/useRandomTagline';
@@ -9,17 +10,32 @@ export default function Home() {
   const tagline = useRandomTagline();
   const [shortUrl, setShortUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (longUrl: string) => {
-    setIsLoading(true);
     setError(null);
-    setShortUrl(null);
+    setIsConfirmed(false);
+    
+    // Generate code client-side for optimistic UI
+    const code = generateShortCode();
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || window.location.origin;
+    const optimisticUrl = `${baseUrl}/${code}`;
+    
+    // Show optimistic URL immediately
+    setShortUrl(optimisticUrl);
+    setIsLoading(true);
 
     try {
-      const response = await createShortUrl(longUrl);
-      setShortUrl(response.shortUrl);
+      const response = await createShortUrl(longUrl, code);
+      // Update if backend returned different code (rare collision)
+      if (response.shortUrl !== optimisticUrl) {
+        setShortUrl(response.shortUrl);
+      }
+      setIsConfirmed(true);
     } catch (err: any) {
+      // Clear optimistic URL on error
+      setShortUrl(null);
       setError(err.response?.data?.message || 'Failed to create short URL. Please try again.');
       console.error('Error creating short URL:', err);
     } finally {
@@ -52,13 +68,13 @@ export default function Home() {
           </div>
         )}
 
-        {shortUrl && <ShortUrlResult shortUrl={shortUrl} />}
+        {shortUrl && <ShortUrlResult shortUrl={shortUrl} isConfirmed={isConfirmed} />}
       </div>
 
       {/* Question Mark Help Button */}
       <Link
         to="/info"
-        className="fixed bottom-4 right-4 w-6 h-6 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center z-50 group"
+        className="fixed bottom-4 right-4 w-6 h-6 bg-stone-700 hover:bg-stone-800 dark:bg-stone-300 dark:hover:bg-white text-white dark:text-stone-900 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center z-50 group"
         title="Learn about URL behavior patterns"
       >
         <svg

@@ -13,6 +13,7 @@ interface Env {
 
 interface ShortenRequest {
   longUrl: string;
+  proposedCode?: string;
 }
 
 interface ShortenResponse {
@@ -130,6 +131,15 @@ async function sendAnalyticsEvent(
 }
 
 /**
+ * Validate a proposed short code from the client
+ * Must be exactly 8 characters of allowed charset
+ */
+function isValidProposedCode(code: string | undefined): code is string {
+  if (!code || typeof code !== 'string') return false;
+  return /^[A-Za-z0-9_-]{8}$/.test(code);
+}
+
+/**
  * Handle POST /api/shorten
  */
 async function handleShorten(
@@ -138,7 +148,7 @@ async function handleShorten(
 ): Promise<Response> {
   try {
     const body: ShortenRequest = await request.json();
-    const { longUrl } = body;
+    const { longUrl, proposedCode } = body;
 
     if (!longUrl || typeof longUrl !== 'string') {
       return addCorsHeaders(new Response(
@@ -158,25 +168,38 @@ async function handleShorten(
       ));
     }
 
-    // Generate unique short code
-    let code: string;
-    let attempts = 0;
-    const maxAttempts = 10;
-
-    do {
-      code = generateShortCode();
-      const existing = await env.KV_URLS.get(code);
+    // Try to use client-proposed code first (optimistic UI support)
+    let code: string | undefined;
+    
+    if (isValidProposedCode(proposedCode)) {
+      const existing = await env.KV_URLS.get(proposedCode);
       if (!existing) {
-        break;
+        // Client's code is valid and available - use it
+        code = proposedCode;
       }
-      attempts++;
-    } while (attempts < maxAttempts);
+      // If collision, fall through to generate new code
+    }
 
-    if (attempts >= maxAttempts) {
-      return addCorsHeaders(new Response(
-        JSON.stringify({ error: 'Failed to generate unique code' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      ));
+    // Generate unique short code if no valid proposed code
+    if (!code) {
+      let attempts = 0;
+      const maxAttempts = 10;
+
+      do {
+        code = generateShortCode();
+        const existing = await env.KV_URLS.get(code);
+        if (!existing) {
+          break;
+        }
+        attempts++;
+      } while (attempts < maxAttempts);
+
+      if (attempts >= maxAttempts) {
+        return addCorsHeaders(new Response(
+          JSON.stringify({ error: 'Failed to generate unique code' }),
+          { status: 500, headers: { 'Content-Type': 'application/json' } }
+        ));
+      }
     }
 
     // Store normalized URL in KV

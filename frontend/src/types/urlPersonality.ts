@@ -5,7 +5,6 @@
 export type MoodType = 'sassy' | 'bored' | 'bruh' | 'bro' | 'party' | 'chill' | 'wholesome';
 
 export type BehaviorType =
-  | 'started_typing'
   | 'cleared_all'
   | 'removed_tld'
   | 'added_tld'
@@ -13,12 +12,11 @@ export type BehaviorType =
   | 'fixed_error'
   | 'oscillating'
   | 'has_spaces'
+  | 'has_invisible_chars'
   | 'has_port'
   | 'has_swearwords'
-  | 'too_short'
   | 'dot_without_tld'
-  | 'using_http'
-  | 'typing';
+  | 'using_http';
 
 export type PatternType =
   | 'missingTld'
@@ -48,6 +46,7 @@ export interface UrlFlags {
   isLikelyAdmin?: boolean;
   hasMultipleSubdomains?: boolean;
   hasSpaces?: boolean;
+  hasInvisibleChars?: boolean;
   hasPort?: boolean;
   hasSwearwords?: boolean;
   isShort?: boolean;

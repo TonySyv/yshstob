@@ -32,23 +32,41 @@ function hasSwearwords(text: string): boolean {
 }
 
 /**
+ * Check for invisible/exotic Unicode space characters ("one pixel spaces")
+ * These are sneaky characters that look like nothing but take up space
+ */
+function hasInvisibleChars(text: string): boolean {
+  // Zero-width and invisible characters
+  const invisiblePattern = /[\u200B-\u200D\u2060\uFEFF]/;
+  
+  // Exotic Unicode spaces (hair space, thin space, en space, em space, etc.)
+  const exoticSpacePattern = /[\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]/;
+  
+  return invisiblePattern.test(text) || exoticSpacePattern.test(text);
+}
+
+/**
  * Extract boolean flags from a parsed URL object
  */
 export function getUrlFlags(parsed: URL | null, rawInput: string = ''): UrlFlags {
   if (!parsed) {
     // Check raw input for patterns even if URL parsing failed
-    const hasSpaces = /\s/.test(rawInput);
+    // Use trimmed input to avoid false positives from leading/trailing whitespace (common in pasted URLs)
+    const trimmedInput = rawInput.trim();
+    const hasSpacesFlag = /\s/.test(trimmedInput);
+    const hasInvisibleCharsFlag = hasInvisibleChars(rawInput); // Check original for invisible chars
     const portMatch = rawInput.match(/:(\d+)/);
     const hasPort = !!portMatch && portMatch[1] && portMatch[1].length > 0;
     const hasSwearwordsFlag = hasSwearwords(rawInput);
     // Don't mark as short if invalid - we only roast valid short URLs
     const isShort = false;
     // Dot without TLD: ends with dot, or has dot followed by space/nothing, or dot without valid TLD
-    const dotWithoutTld = /\.\s*$/.test(rawInput) || /\.(?!\w{2,})/.test(rawInput);
+    const dotWithoutTld = /\.\s*$/.test(trimmedInput) || /\.(?!\w{2,})/.test(trimmedInput);
     
     return {
       valid: false,
-      hasSpaces,
+      hasSpaces: hasSpacesFlag,
+      hasInvisibleChars: hasInvisibleCharsFlag,
       hasPort,
       hasSwearwords: hasSwearwordsFlag,
       isShort,
@@ -68,7 +86,10 @@ export function getUrlFlags(parsed: URL | null, rawInput: string = ''): UrlFlags
   const isValid = hasTld || isIp || isLocalhost;
 
   // Check raw input for additional patterns
-  const hasSpaces = /\s/.test(rawInput);
+  // Use trimmed input to avoid false positives from leading/trailing whitespace (common in pasted URLs)
+  const trimmedInput = rawInput.trim();
+  const hasSpacesFlag = /\s/.test(trimmedInput);
+  const hasInvisibleCharsFlag = hasInvisibleChars(rawInput); // Check original for invisible chars
   const portMatch = rawInput.match(/:(\d+)/);
   const hasPort = !!portMatch && portMatch[1] && portMatch[1].length > 0;
   const hasSwearwordsFlag = hasSwearwords(rawInput);
@@ -91,7 +112,8 @@ export function getUrlFlags(parsed: URL | null, rawInput: string = ''): UrlFlags
     isLikelyLogin: /login|signin|auth/i.test(parsed.pathname),
     isLikelyAdmin: /admin|dashboard/i.test(parsed.pathname),
     hasMultipleSubdomains: hostname.split('.').length > 3,
-    hasSpaces,
+    hasSpaces: hasSpacesFlag,
+    hasInvisibleChars: hasInvisibleCharsFlag,
     hasPort,
     hasSwearwords: hasSwearwordsFlag,
     isShort,

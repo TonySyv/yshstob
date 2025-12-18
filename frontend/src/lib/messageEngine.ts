@@ -288,6 +288,7 @@ export function pickMessage(
   // These are less relevant when combined with actual problems
   const structuralBehaviors: BehaviorType[] = [
     'has_spaces',
+    'has_invisible_chars',
     'dot_without_tld',
     'has_swearwords',
     'using_http',
@@ -314,18 +315,19 @@ export function pickMessage(
   // Order behaviors for better flow: structural issues first, then behavioral roasts
   const behaviorPriority: Record<BehaviorType, number> = {
     has_spaces: 1,
-    dot_without_tld: 2,
-    has_swearwords: 3,
-    using_http: 4,
-    has_port: 5,
-    too_short: 6,
-    broke_validity: 7,
-    fixed_error: 8,
-    removed_tld: 9,
-    added_tld: 10,
-    oscillating: 11,
-    cleared_all: 12,
-    started_typing: 13,
+    has_invisible_chars: 2,
+    dot_without_tld: 3,
+    has_swearwords: 4,
+    using_http: 5,
+    has_port: 6,
+    too_short: 7,
+    broke_validity: 8,
+    fixed_error: 9,
+    removed_tld: 10,
+    added_tld: 11,
+    oscillating: 12,
+    cleared_all: 13,
+    started_typing: 14,
     typing: 99,
   };
   

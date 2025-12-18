@@ -77,12 +77,16 @@ export default function Info() {
                 <p className="text-sm text-gray-600 dark:text-gray-400">When you delete all the text and start fresh.</p>
               </div>
               <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Big Paste</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">When you paste a large amount of text at once (more than 10 characters).</p>
-              </div>
-              <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Oscillating</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400">When you keep going back and forth between the same values (can't make up your mind).</p>
+              </div>
+              <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Added TLD</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">When you add a top-level domain like .com while typing.</p>
+              </div>
+              <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Removed TLD</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">When you accidentally remove the .com or other TLD.</p>
               </div>
               <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Fixed an Error</h3>
@@ -115,6 +119,10 @@ export default function Info() {
                 <p className="text-sm text-gray-600 dark:text-gray-400">URLs can't have spaces. Use hyphens or %20 instead.</p>
               </div>
               <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Invisible Characters</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Your URL contains sneaky zero-width or exotic Unicode space characters that look invisible but cause problems.</p>
+              </div>
+              <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Dot Without TLD</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400">You have a dot but no proper ending (e.g., "example." instead of "example.com").</p>
               </div>
@@ -134,7 +142,7 @@ export default function Info() {
               </div>
               <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Using HTTP (Not Secure)</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">You're using http:// instead of https://. We'll definitely roast you for this in 2024!</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">You're using http:// instead of https://. We'll definitely roast you for this in 2025!</p>
               </div>
               <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-1">UTM Tracking Parameters</h3>
@@ -174,14 +182,43 @@ export default function Info() {
             </div>
           </section>
 
+          {/* Speedometer */}
+          <section className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">📊 Speedometer</h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              We track and display real-time metrics about our redirect service performance:
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Average Redirect Speed</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">How fast our redirects happen on average (in milliseconds).</p>
+              </div>
+              <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Total Redirects</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">The total number of redirects we've processed.</p>
+              </div>
+              <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Version & Deploy Info</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Current version number and when the service was last deployed.</p>
+              </div>
+              <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Commit Summary</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">What's new in the latest deployment.</p>
+              </div>
+            </div>
+            <p className="text-gray-600 dark:text-gray-400 mt-4">
+              Check it out at <Link to="/speedometer" className="text-blue-600 dark:text-blue-400 hover:underline">/speedometer</Link>!
+            </p>
+          </section>
+
           {/* How It Works */}
           <section className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 border border-blue-200 dark:border-blue-800">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">How It Works</h2>
             <p className="text-gray-700 dark:text-gray-300 mb-4">
-              The system analyzes your URL in real-time as you type. It checks for patterns, detects your typing behavior, and combines multiple observations into natural-sounding messages. All processing happens instantly in your browser - no data is sent to any server.
+              The system analyzes your URL in real-time as you type. It checks for patterns, detects your typing behavior, and combines multiple observations into natural-sounding messages. All processing happens instantly in your browser - no data is sent to any server until you click "Shorten URL".
             </p>
             <p className="text-gray-700 dark:text-gray-300">
-              Try typing different URLs, paste long links, add ports, use http:// instead of https://, or type something under 30 characters to see all the different reactions!
+              Try typing different URLs, add ports, use http:// instead of https://, or type something under 30 characters to see all the different reactions!
             </p>
           </section>
         </div>

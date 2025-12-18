@@ -18,11 +18,6 @@
       ]
     },
     "behavior": {
-      "started_typing": [
-        "Oh, you're actually typing? Color me surprised.",
-        "Look who decided to type. Let's see if you can handle this.",
-        "Typing now? Good for you."
-      ],
       "cleared_all": [
         "Wiped it clean, huh? Starting fresh, I see.",
         "Deleted everything? Bold move. Let's see if round two goes better.",
@@ -58,6 +53,11 @@
         "URLs don't have spaces. Remove them. It's not that hard.",
         "Spaces detected. URLs and spaces don't mix, sweetie."
       ],
+      "has_invisible_chars": [
+        "Oh cute, invisible characters. Trying to be sneaky, are we?",
+        "Zero-width spaces? Hair spaces? I can see you, honey. Remove them.",
+        "Invisible Unicode garbage detected. Did you copy this from somewhere sketchy?"
+      ],
       "has_port": [
         "Custom port? Fancy. Hope you know what you're doing.",
         "Port number detected. Advanced user, I see. Or maybe not.",
@@ -73,17 +73,11 @@
         "Profanity detected. How mature of you.",
         "Swearwords? Keep it professional, will you?"
       ],
-      "too_short": [
-        "That's under 30 characters. The shortened URL will be LONGER than this. Defeats the whole point, but you do you.",
-        "Under 30 characters? Shortening this will make it longer. That's backwards, honey.",
-        "Too short to shorten. The shortened version will be longer. Makes total sense."
-      ],
       "dot_without_tld": [
         "A dot but no TLD? That's like a sentence without punctuation.",
         "Dot without TLD? Incomplete. Finish what you started.",
         "You have a dot but no ending? That's half a URL, honey."
-      ],
-      "typing": ["Still typing... still typing..."]
+      ]
     },
     "valid": {
       "default": [
@@ -145,11 +139,6 @@
       ]
     },
     "behavior": {
-      "started_typing": [
-        "You started typing. Great.",
-        "Typing. Cool.",
-        "Started typing. Fine."
-      ],
       "cleared_all": [
         "Cleared it. Fine.",
         "Deleted everything. Starting over. Riveting.",
@@ -185,6 +174,11 @@
         "Spaces detected. Remove them. Or don't.",
         "URLs don't have spaces. But whatever."
       ],
+      "has_invisible_chars": [
+        "Invisible characters. How thrilling.",
+        "Zero-width spaces or something. Whatever.",
+        "Hidden Unicode stuff. Copied from somewhere weird, I guess."
+      ],
       "has_port": [
         "Custom port. Fancy. Hope you know what you're doing.",
         "Port number. Cool.",
@@ -200,17 +194,11 @@
         "Profanity detected. Nice.",
         "Swearwords. Cool."
       ],
-      "too_short": [
-        "Under 30 characters. Shortened version will be longer. That's backwards, but okay.",
-        "Too short. Shortened URL will be longer. Makes sense.",
-        "Under 30 chars. Shortening defeats the purpose. But whatever."
-      ],
       "dot_without_tld": [
         "Dot but no TLD. That's incomplete. Finish it.",
         "Incomplete TLD. Finish it. Or don't.",
         "Dot without ending. Incomplete."
-      ],
-      "typing": ["Typing..."]
+      ]
     },
     "valid": {
       "default": [
@@ -271,11 +259,6 @@
       ]
     },
     "behavior": {
-      "started_typing": [
-        "Bruh, finally typing. Let's go.",
-        "Bruh, you're typing now.",
-        "Bruh, typing time."
-      ],
       "cleared_all": [
         "Bruh, deleted it all. Fresh start.",
         "Bruh, cleared everything. New beginning.",
@@ -311,6 +294,11 @@
         "Bruh, URLs don't have spaces. Remove them.",
         "Bruh, spaces detected. That's wrong, bruh."
       ],
+      "has_invisible_chars": [
+        "Bruh, invisible characters? You think I wouldn't notice?",
+        "Bruh, zero-width spaces? Hair spaces? I see everything, bruh.",
+        "Bruh, hidden Unicode garbage. Where'd you copy this from?"
+      ],
       "has_port": [
         "Bruh, custom port. Interesting.",
         "Bruh, port number. Cool.",
@@ -326,17 +314,11 @@
         "Bruh, profanity in URL? Come on.",
         "Bruh, swearwords detected. Keep it clean, bruh."
       ],
-      "too_short": [
-        "Bruh, under 30 characters. Shortened URL will be longer. That's backwards, bruh.",
-        "Bruh, too short. Shortening makes it longer. That's wrong, bruh.",
-        "Bruh, under 30 chars. Shortened version will be longer. Makes no sense, bruh."
-      ],
       "dot_without_tld": [
         "Bruh, dot but no TLD? Come on.",
         "Bruh, incomplete TLD. Finish it.",
         "Bruh, dot without ending. Complete it, bruh."
-      ],
-      "typing": ["Bruh, still typing..."]
+      ]
     },
     "valid": {
       "default": [
@@ -397,11 +379,6 @@
       ]
     },
     "behavior": {
-      "started_typing": [
-        "Bro, typing time! Let's do this.",
-        "Bro, you're typing. Let's go!",
-        "Bro, typing now. That's the way."
-      ],
       "cleared_all": [
         "Bro, wiped clean. New beginning.",
         "Bro, cleared everything. Fresh start.",
@@ -437,6 +414,11 @@
         "Bro, spaces detected. Remove them. You got this.",
         "Bro, URLs don't have spaces. Fix it, bro."
       ],
+      "has_invisible_chars": [
+        "Bro, invisible characters? Sneaky, bro. Real sneaky.",
+        "Bro, you got those one-pixel spaces in there. I see them, bro.",
+        "Bro, hidden Unicode weirdness. Where'd you copy this from, bro?"
+      ],
       "has_port": [
         "Bro, custom port. Advanced move.",
         "Bro, port number. That's advanced.",
@@ -452,17 +434,11 @@
         "Bro, profanity detected. Keep it professional.",
         "Bro, swearwords? Keep it clean, bro."
       ],
-      "too_short": [
-        "Bro, under 30 characters? Shortened URL will be LONGER. That's the opposite of shortening, bro.",
-        "Bro, too short. Shortening makes it longer. That defeats the purpose, bro.",
-        "Bro, under 30 chars. Shortened version will be longer. That's backwards, bro."
-      ],
       "dot_without_tld": [
         "Bro, dot without TLD? Finish the job.",
         "Bro, incomplete TLD. Complete it, bro.",
         "Bro, dot but no ending. Finish it."
-      ],
-      "typing": ["Bro, typing away. Keep it up."]
+      ]
     },
     "valid": {
       "default": [
@@ -523,11 +499,6 @@
       ]
     },
     "behavior": {
-      "started_typing": [
-        "TYPING TIME! 🎊 The party starts now!",
-        "YOU'RE TYPING! 🎉 LET'S GOOO!",
-        "TYPING NOW! 🎊 Party mode activated!"
-      ],
       "cleared_all": [
         "DELETED EVERYTHING! 🎉 New beginning, let's go!",
         "CLEAN SLATE! 🎊 Fresh start, baby!",
@@ -563,6 +534,11 @@
         "SPACES DETECTED! 💥 Remove them and party on!",
         "SPACES IN URL! 🎊 URLs don't have spaces!"
       ],
+      "has_invisible_chars": [
+        "INVISIBLE CHARACTERS! 👻 SNEAKY SNEAKY! Remove them!",
+        "ZERO-WIDTH SPACES! 🔍 I SEE YOU! Get them outta there!",
+        "HIDDEN UNICODE! 🕵️ BUSTED! Clean that up!"
+      ],
       "has_port": [
         "CUSTOM PORT! 🎯 Advanced move!",
         "PORT NUMBER! 🔥 That's advanced!",
@@ -578,17 +554,11 @@
         "PROFANITY DETECTED! 💥 Keep it friendly!",
         "SWEARWORDS! 🎊 Keep it clean, party people!"
       ],
-      "too_short": [
-        "UNDER 30 CHARACTERS! 📏 Shortened URL will be LONGER! That's backwards! 🎉",
-        "TOO SHORT! 💥 Shortening makes it longer! That's wrong!",
-        "UNDER 30 CHARS! 🎊 Shortened version will be longer! Backwards!"
-      ],
       "dot_without_tld": [
         "DOT WITHOUT TLD! 🎯 Finish it!",
         "INCOMPLETE TLD! 💥 Complete it and party!",
         "DOT BUT NO ENDING! 🎉 Finish it!"
-      ],
-      "typing": ["TYPING AWAY! 🎊 The energy is real!"]
+      ]
     },
     "valid": {
       "default": [
@@ -649,11 +619,6 @@
       ]
     },
     "behavior": {
-      "started_typing": [
-        "Typing now. Nice and easy.",
-        "You're typing. Take it easy.",
-        "Typing. All good."
-      ],
       "cleared_all": [
         "Deleted everything. Clean slate, I like it.",
         "Cleared it out. Fresh start, nice.",
@@ -689,6 +654,11 @@
         "Spaces detected. Remove them when you're ready.",
         "URLs don't have spaces. Fix it when you can."
       ],
+      "has_invisible_chars": [
+        "Invisible characters in there. They happen when you copy from weird places.",
+        "Zero-width spaces or something similar. No big deal, just clean 'em up.",
+        "Hidden Unicode stuff. Probably from copying. Easy fix."
+      ],
       "has_port": [
         "Custom port. Nice touch.",
         "Port number. That's cool.",
@@ -704,17 +674,11 @@
         "Profanity detected. Keep it friendly.",
         "Swearwords? Keep it clean, friend."
       ],
-      "too_short": [
-        "Under 30 characters. Shortened URL will be longer. Kind of defeats the purpose, but it's your call.",
-        "Too short. Shortening makes it longer. That's backwards, but no worries.",
-        "Under 30 chars. Shortened version will be longer. Defeats the purpose, but you do you."
-      ],
       "dot_without_tld": [
         "Dot without TLD? Add the TLD and you're good.",
         "Incomplete TLD. Finish it when you're ready.",
         "Dot but no ending. Complete it and you're set."
-      ],
-      "typing": ["Typing. Chill vibes."]
+      ]
     },
     "valid": {
       "default": [
@@ -775,11 +739,6 @@
       ]
     },
     "behavior": {
-      "started_typing": [
-        "Look at you typing! You're doing great! ✨",
-        "You're typing! That's wonderful! Keep going! 💖",
-        "Typing now! You're amazing! 🌟"
-      ],
       "cleared_all": [
         "Cleared everything? New beginning! I'm proud of you! 💕",
         "Fresh start! Sometimes that's exactly what we need. You've got this! 🌸",
@@ -815,6 +774,11 @@
         "Spaces detected? No worries! Remove them and you'll be perfect! 🌸",
         "URLs don't have spaces, but that's okay! You can fix it! ✨"
       ],
+      "has_invisible_chars": [
+        "Oh! There are some invisible characters hiding in there! 👻 You can remove them! ✨",
+        "Looks like some sneaky zero-width spaces got in! It happens when you copy things! 💕",
+        "Hidden characters detected! No worries, they're easy to clean up! 🌟"
+      ],
       "has_port": [
         "Custom port! That's advanced! Great job! 💖",
         "Port number! That's impressive! You're doing great! ✨",
@@ -830,17 +794,11 @@
         "Profanity detected? Keep it clean! You're better than that! 💕",
         "Swearwords? Let's keep it nice! You can do it! ✨"
       ],
-      "too_short": [
-        "Under 30 characters! The shortened URL will be longer, but that's okay! You can still shorten it! ✨",
-        "Too short? Shortening makes it longer, but that's fine! You can still do it! 💖",
-        "Under 30 chars! Shortened version will be longer, but no worries! You've got this! 🌟"
-      ],
       "dot_without_tld": [
         "Dot without TLD? Add the TLD and you'll be all set! 💖",
         "Incomplete TLD? Finish it and you'll be perfect! ✨",
         "Dot but no ending? Complete it and you're amazing! 🌸"
-      ],
-      "typing": ["Typing away! You've got this! 💖"]
+      ]
     },
     "valid": {
       "default": [

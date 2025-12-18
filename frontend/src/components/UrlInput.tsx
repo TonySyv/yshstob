@@ -110,7 +110,7 @@ export default function UrlInput({ onSubmit, isLoading = false }: UrlInputProps)
                 initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200/60 dark:border-blue-800/60 rounded-lg px-4 py-3 text-gray-800 dark:text-gray-200 text-sm"
+                className="bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-300 dark:border-zinc-600 rounded-lg px-4 py-3 text-zinc-700 dark:text-zinc-200 text-sm"
               >
                 <div className="flex items-start gap-2">
                   <motion.div
@@ -139,7 +139,7 @@ export default function UrlInput({ onSubmit, isLoading = false }: UrlInputProps)
           disabled={!canSubmit}
           whileHover={canSubmit ? { scale: 1.02 } : {}}
           whileTap={canSubmit ? { scale: 0.98 } : {}}
-          className="px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50 text-white text-sm font-medium transition-all duration-150 shadow-sm hover:shadow-md self-start flex items-center gap-2"
+          className="px-6 py-2.5 rounded-lg bg-stone-800 hover:bg-stone-900 active:bg-stone-950 dark:bg-stone-200 dark:hover:bg-white dark:active:bg-stone-100 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50 text-white dark:text-stone-900 text-sm font-medium transition-all duration-150 shadow-sm hover:shadow-md self-start flex items-center gap-2"
         >
           {isLoading ? (
             <>

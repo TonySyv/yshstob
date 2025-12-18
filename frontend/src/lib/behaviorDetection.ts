@@ -17,12 +17,11 @@ export function detectBehaviors(
 ): BehaviorType[] {
   const behaviors: BehaviorType[] = [];
 
-  // No previous state - user just started
+  // No previous state - user just started (no message needed)
   if (!prev || !prev.value) {
-    if (next.value) {
-      behaviors.push('started_typing');
-    } else {
-      return ['typing'];
+    // Return empty array - no message for initial typing
+    if (!next.value) {
+      return [];
     }
   }
 
@@ -75,6 +74,9 @@ export function detectBehaviors(
   if (next.flags.hasSpaces) {
     behaviors.push('has_spaces');
   }
+  if (next.flags.hasInvisibleChars) {
+    behaviors.push('has_invisible_chars');
+  }
   // Only detect port if it's a complete port number (not incomplete)
   if (next.flags.hasPort && next.parsed) {
     behaviors.push('has_port');
@@ -82,21 +84,12 @@ export function detectBehaviors(
   if (next.flags.hasSwearwords) {
     behaviors.push('has_swearwords');
   }
-  // Only roast for short URLs if they're valid (roasting about shortening, not validity)
-  if (next.flags.isShort && next.flags.valid) {
-    behaviors.push('too_short');
-  }
   if (next.flags.dotWithoutTld) {
     behaviors.push('dot_without_tld');
   }
   // Roast for using http:// instead of https://
   if (next.flags.isHttp && next.flags.valid) {
     behaviors.push('using_http');
-  }
-
-  // If no specific behaviors detected, return typing
-  if (behaviors.length === 0) {
-    return ['typing'];
   }
 
   return behaviors;
