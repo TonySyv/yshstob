@@ -4,19 +4,6 @@
 
 import type { InputState, BehaviorType } from '../types/urlPersonality';
 
-// Keep old function name for backward compatibility, but mark as deprecated
-/**
- * @deprecated Use detectBehaviors instead (returns array)
- */
-export function detectBehavior(
-  prev: InputState | null,
-  next: InputState,
-  history: InputState[]
-): BehaviorType {
-  const behaviors = detectBehaviors(prev, next, history);
-  return behaviors[0] || 'typing';
-}
-
 const MAX_HISTORY_LENGTH = 20;
 
 /**

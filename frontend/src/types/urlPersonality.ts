@@ -7,7 +7,6 @@ export type MoodType = 'sassy' | 'bored' | 'bruh' | 'bro' | 'party' | 'chill' | 
 export type BehaviorType =
   | 'started_typing'
   | 'cleared_all'
-  | 'pasted_big'
   | 'removed_tld'
   | 'added_tld'
   | 'broke_validity'

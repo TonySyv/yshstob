@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { parseUrl, getUrlFlags, detectStructurePattern, normalizeUrl } from '../lib/urlUtils';
+import { parseUrl, getUrlFlags, detectStructurePattern } from '../lib/urlUtils';
 import { detectBehaviors, createInitialState, updateHistory } from '../lib/behaviorDetection';
 import { getCurrentMood } from '../lib/moodSystem';
 import { pickMessage } from '../lib/messageEngine';

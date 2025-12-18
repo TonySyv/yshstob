@@ -2,7 +2,7 @@
  * Message selection engine for personality-driven URL input
  */
 
-import type { MoodType, BehaviorType, PatternType, MessageResult, InputState } from '../types/urlPersonality';
+import type { MoodType, BehaviorType, PatternType, MessageResult } from '../types/urlPersonality';
 import messagesData from '../data/messages.json';
 
 type MessagesData = typeof messagesData;
