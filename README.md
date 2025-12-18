@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🔗 yshstob
+# yshstob
 
 ### *The URL shortener with attitude*
 
@@ -12,78 +12,92 @@
 
 **Transform long URLs into shorter links — and get roasted while doing it.**
 
-[Live Demo](#) · [Report Bug](../../issues) · [Request Feature](../../issues)
+[Live Demo](https://you-should-have-seen-the-original-bro.com)
 
 ---
 
 </div>
 
-## ✨ What is yshstob?
+## What is yshstob?
 
-yshstob isn't just another URL shortener. It's a URL shortener with **personality**. While it dutifully shortens your links, it also:
+yshstob is just another URL shortener. 
 
-- 🎭 **Changes mood daily** — Sassy on Monday, Wholesome on Sunday
-- 🔍 **Watches you type** — And comments on your mistakes in real-time
-- 🎯 **Detects patterns** — From HTTP in 2025 to suspiciously long UTM parameters
-- ⚡ **Blazingly fast** — Sub-15ms redirects powered by Cloudflare's edge network
+But here's the thing: I'm not a millionaire who can afford a 3-character domain. So instead of pretending this is the next bit.ly, I decided to lean into the absurdity. The domain is literally `you-should-have-seen-the-original-bro.com` — which kind of defeats the purpose of a URL shortener, and that's the joke.
+
+**However**, underneath the humor, this is built to be production-grade:
+
+- **Lightning-fast redirects** — Sub-15ms response times powered by Cloudflare's edge network
+- **Modern stack** — React 18, TypeScript, Vite, Cloudflare Workers
+- **99% production-viable** — Real KV storage, proper error handling, analytics tracking
+- **Actually reliable** — This isn't a toy that breaks under load
+
+I wanted to prove that a hobby project can be both silly and professionally built. So yes, it roasts your URLs, but it also redirects them faster than most "serious" shorteners.
 
 > *"Short links. Sharp humor."*
 
 ---
 
-## 🎭 Meet the URL Gremlin
+## Meet the URL Gremlin
 
-Our URL personality system has different moods depending on the day:
+The personality system changes mood depending on the day of the week:
 
 | Day | Mood | Vibe |
 |-----|------|------|
-| Monday | 💅 **Sassy** | Sharp, sarcastic, and not afraid to call you out |
-| Tuesday | 😑 **Bored** | Unimpressed, tired, and barely paying attention |
-| Wednesday | 😎 **Bruh** | Every message contains "bruh". That's it. |
-| Thursday | 💪 **Bro** | Gym-bro energy, encouraging and motivational |
-| Friday | 🎉 **Party** | ALL CAPS! EMOJIS! HYPED ENERGY! |
-| Saturday | 😌 **Chill** | Relaxed, smooth, bartender vibes |
-| Sunday | 💖 **Wholesome** | Gentle, supportive, your biggest cheerleader |
+| Monday | **Sassy** | Sharp, sarcastic, and not afraid to call you out |
+| Tuesday | **Bored** | Unimpressed, tired, and barely paying attention |
+| Wednesday | **Bruh** | Every message contains "bruh". That's it. |
+| Thursday | **Bro** | Gym-bro energy, encouraging and motivational |
+| Friday | **Party** | ALL CAPS! HYPED ENERGY! |
+| Saturday | **Chill** | Relaxed, smooth, bartender vibes |
+| Sunday | **Wholesome** | Gentle, supportive, your biggest cheerleader |
 
 ---
 
-## 🚀 Features
+## Features
 
 ### Core Features
 
-- **🔗 URL Shortening** — Turn monster URLs into clean, shareable links
-- **📊 Real-time Metrics** — Track redirect speeds and total redirects via the Speedometer
-- **🎨 Dark Mode** — Easy on the eyes, day or night
-- **📱 Responsive** — Works beautifully on desktop and mobile
+- **URL Shortening** — Turn monster URLs into clean, shareable links
+- **Real-time Metrics** — Track redirect speeds and total redirects via the Speedometer
+- **Dark Mode** — Easy on the eyes, day or night
+- **Responsive** — Works on desktop and mobile
 
 ### Smart Detection
 
-The gremlin notices everything:
+As a QA engineer, I wanted to go deep on URL verification. The system analyzes a ridiculous number of URL characteristics — zero-width Unicode characters, invisible whitespace variants, missing or malformed TLDs, trailing dots without extensions, HTTP in 2025, custom port numbers, raw IP addresses instead of domains, UTM tracking bloat, suspiciously long query strings, URLs that are ironically shorter than our shortened version, login and admin page patterns, potential injection vectors, and yes, even swear words. The difference is: instead of blocking you or throwing validation errors, we just roast you and let you do whatever you want anyway. It's QA-level scrutiny with zero gatekeeping. Your URL, your choice.
 
 | What It Catches | Example |
 |-----------------|---------|
-| 🚫 Missing TLD | `google` instead of `google.com` |
-| 🔓 HTTP in 2025 | Using `http://` like it's 1999 |
-| 📊 UTM Tracking | Those pesky `?utm_source=` parameters |
-| 🖥️ Custom Ports | Developer detected! (`:8080`, `:3000`) |
-| 🔢 IP Addresses | Using `192.168.1.1` instead of a domain |
-| 📏 Size Issues | Too long (>500 chars) or hilariously short (<30 chars) |
-| 👀 Invisible Characters | Zero-width Unicode shenanigans |
-| 🔐 Login/Admin Pages | Sensitive URLs detected |
+| Missing TLD | `google` instead of `google.com` |
+| Missing Protocol | No `https://` prefix |
+| Trailing Dot | `example.` with nothing after it |
+| Spaces in URL | URLs can't have spaces, use `%20` |
+| Invisible Characters | Zero-width Unicode, hair spaces, em spaces |
+| HTTP in 2025 | Using `http://` like it's 1999 |
+| Custom Ports | Developer detected! (`:8080`, `:3000`) |
+| IP Addresses | Using `192.168.1.1` instead of a domain |
+| Multiple Subdomains | `a.b.c.d.example.com` - getting excessive |
+| UTM Tracking | Those pesky `?utm_source=` marketing params |
+| Query Strings | Long `?param=value&other=stuff` chains |
+| URL Fragments | The `#section` anchors |
+| Login/Admin Pages | URLs containing `/login`, `/auth`, `/admin`, `/dashboard` |
+| Too Long | Over 500 characters of URL chaos |
+| Too Short | Under 30 chars - shorter than our "short" URL |
+| Swearwords | We notice. We judge. We allow. |
 
 ### Behavior Tracking
 
-It also watches *how* you type:
+If you decide to type your URL for some reason, it watches that too:
 
-- ✏️ Started typing
-- 🗑️ Cleared everything
-- 🔄 Can't make up your mind (oscillating)
-- ✅ Fixed an error
-- 💔 Broke a valid URL
+- Started typing
+- Cleared everything
+- Can't make up your mind (oscillating)
+- Fixed an error
+- Broke a valid URL
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 yshstob/
@@ -114,7 +128,7 @@ yshstob/
 
 ---
 
-## 🛠️ Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -167,7 +181,7 @@ wrangler deploy
 
 ---
 
-## 📖 API Reference
+## API Reference
 
 ### Create Short URL
 
@@ -215,7 +229,7 @@ GET /speedometer
 
 ---
 
-## 🎨 Screenshots
+## Screenshots
 
 ### Home Page
 The main URL shortening interface with real-time personality feedback.
@@ -228,7 +242,7 @@ Complete guide to all the URL gremlin's behaviors and reactions.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Feel free to:
 
@@ -240,7 +254,7 @@ Contributions are welcome! Feel free to:
 
 ---
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
@@ -248,8 +262,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**Built with ❤️ and a healthy dose of sarcasm**
+**A hobby project built with real engineering standards**
 
-*yshstob — because your URLs deserve to be judged*
+*yshstob — because if your domain is going to be long anyway, you might as well have fun with it*
 
 </div>
