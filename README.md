@@ -106,14 +106,41 @@ yshstob/
 │   │   ├── pages/           # Route pages (Home, Speedometer, Info)
 │   │   ├── lib/             # Core logic (API, detection, mood system)
 │   │   └── hooks/           # Custom React hooks
-│   └── ...
+│   │
+│   └── functions/           # Cloudflare Pages Functions (serverless API)
+│       ├── api/
+│       │   └── shorten.ts   # POST /api/shorten
+│       └── [code].ts        # GET /:code → redirect
 │
-└── backend/                  # Cloudflare Workers
-    ├── redirect-worker/     # URL shortening & redirects
-    │   └── src/index.ts     # POST /api/shorten, GET /:code
-    │
-    └── analytics-worker/    # Metrics & tracking
+└── backend/
+    └── analytics-worker/    # Metrics & tracking (standalone Worker)
         └── src/index.ts     # GET /speedometer, POST /analytics
+```
+
+### How It Works
+
+```
+┌─────────────────────────────────────────────────────────┐
+│           Cloudflare Pages (single domain)              │
+│         you-should-have-seen-the-original-bro.com       │
+├─────────────────────────────────────────────────────────┤
+│  📁 Static Frontend (React)                             │
+│     /           → Home page                             │
+│     /info       → Info page                             │
+│     /speedometer → Metrics page                         │
+├─────────────────────────────────────────────────────────┤
+│  ⚡ Pages Functions (serverless)                        │
+│     POST /api/shorten → Create short URL                │
+│     GET /:code        → Redirect to long URL            │
+└─────────────────────────────────────────────────────────┘
+                          │
+                          │ async analytics call
+                          ▼
+              ┌───────────────────────┐
+              │   Analytics Worker    │
+              │  (separate service)   │
+              │  GET /speedometer     │
+              └───────────────────────┘
 ```
 
 ### Tech Stack
@@ -121,7 +148,8 @@ yshstob/
 | Layer | Technology |
 |-------|------------|
 | **Frontend** | React 18, TypeScript, Vite, TailwindCSS |
-| **Backend** | Cloudflare Workers |
+| **Backend** | Cloudflare Pages Functions |
+| **Analytics** | Cloudflare Worker (standalone) |
 | **Storage** | Cloudflare KV |
 | **Routing** | React Router v6 |
 
@@ -151,32 +179,34 @@ npm run dev
 
 The frontend will be available at `http://localhost:5173`
 
-### Backend Setup
+### Deployment
 
-See the detailed [Backend README](backend/README.md) for full setup, including:
-- Creating KV namespaces
-- Configuring worker URLs
-- Deploying to Cloudflare
+The project uses **Cloudflare Pages** with **Pages Functions** for a unified single-domain deployment.
 
-Quick start:
+#### Automatic Deployment (Recommended)
+
+1. Connect your GitHub repo to Cloudflare Pages
+2. Configure build settings:
+   - **Build command**: `npm run build`
+   - **Build output**: `dist`
+   - **Root directory**: `frontend`
+3. Add KV binding in Pages settings:
+   - **Variable**: `KV_URLS` → Your KV namespace
+4. Add environment variable:
+   - **Variable**: `ANALYTICS_WORKER_URL` → `https://analytics-worker.tony-syv.workers.dev`
+5. Push to `main` — auto-deploys!
+
+#### Analytics Worker (Separate)
+
+The analytics worker runs as a standalone Cloudflare Worker:
 
 ```bash
-# Install Wrangler globally
-npm install -g wrangler
-
-# Authenticate
-wrangler login
-
-# Deploy redirect worker
-cd backend/redirect-worker
-npm install
-wrangler deploy
-
-# Deploy analytics worker
-cd ../analytics-worker
+cd backend/analytics-worker
 npm install
 wrangler deploy
 ```
+
+See the [Backend README](backend/README.md) for analytics worker details.
 
 ---
 
