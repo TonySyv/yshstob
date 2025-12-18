@@ -32,6 +32,40 @@ function hasSwearwords(text: string): boolean {
 }
 
 /**
+ * Special characters that are unusual/unexpected in URLs (unencoded)
+ * Maps character to a friendly name for display
+ */
+const SPECIAL_CHAR_MAP: Record<string, string> = {
+  ',': 'comma',
+  '[': 'bracket',
+  ']': 'bracket',
+  '{': 'brace',
+  '}': 'brace',
+  '|': 'pipe',
+  '\\': 'backslash',
+  '^': 'caret',
+  '`': 'backtick',
+  '<': 'angle bracket',
+  '>': 'angle bracket',
+  '"': 'quote',
+  "'": 'quote',
+};
+
+/**
+ * Check for special characters that are unusual in URLs
+ * Returns array of found special character names (deduplicated)
+ */
+function findSpecialChars(text: string): string[] {
+  const found = new Set<string>();
+  for (const char of text) {
+    if (SPECIAL_CHAR_MAP[char]) {
+      found.add(SPECIAL_CHAR_MAP[char]);
+    }
+  }
+  return Array.from(found);
+}
+
+/**
  * Check for invisible/exotic Unicode space characters ("one pixel spaces")
  * These are sneaky characters that look like nothing but take up space
  */
@@ -63,6 +97,7 @@ export function getUrlFlags(parsed: URL | null, rawInput: string = ''): UrlFlags
     // Dot without TLD: ends with dot, or has dot followed by space/nothing, or dot without valid TLD
     const dotWithoutTld = /\.\s*$/.test(trimmedInput) || /\.(?!\w{2,})/.test(trimmedInput);
     
+    const specialCharsFound = findSpecialChars(rawInput);
     return {
       valid: false,
       hasSpaces: hasSpacesFlag,
@@ -71,7 +106,8 @@ export function getUrlFlags(parsed: URL | null, rawInput: string = ''): UrlFlags
       hasSwearwords: hasSwearwordsFlag,
       isShort,
       dotWithoutTld,
-      hasComma: rawInput.includes(','),
+      hasSpecialChars: specialCharsFound.length > 0,
+      specialCharsFound,
     };
   }
 
@@ -98,6 +134,7 @@ export function getUrlFlags(parsed: URL | null, rawInput: string = ''): UrlFlags
   // Only mark as short if valid - we're roasting about shortening, not validity
   const isShort = isValid && rawInput.length > 0 && rawInput.length < 30;
 
+  const specialCharsFound = findSpecialChars(rawInput);
   return {
     valid: isValid,
     hasProtocol: parsed.protocol === 'http:' || parsed.protocol === 'https:',
@@ -120,7 +157,8 @@ export function getUrlFlags(parsed: URL | null, rawInput: string = ''): UrlFlags
     hasSwearwords: hasSwearwordsFlag,
     isShort,
     dotWithoutTld,
-    hasComma: rawInput.includes(','),
+    hasSpecialChars: specialCharsFound.length > 0,
+    specialCharsFound,
   };
 }
 

@@ -126,6 +126,10 @@ export default function Info() {
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Dot Without TLD</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400">You have a dot but no proper ending (e.g., "example." instead of "example.com").</p>
               </div>
+              <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Special Characters</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Your URL contains unusual characters like commas, brackets, pipes, quotes, or backticks. Common in API calls with comma-separated values like <code className="text-xs bg-gray-200 dark:bg-gray-600 px-1 rounded">?include=roles,permissions</code>.</p>
+              </div>
             </div>
           </section>
 

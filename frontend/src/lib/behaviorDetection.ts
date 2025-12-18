@@ -91,9 +91,9 @@ export function detectBehaviors(
   if (next.flags.isHttp && next.flags.valid) {
     behaviors.push('using_http');
   }
-  // Comment on commas in URL (often in query params)
-  if (next.flags.hasComma) {
-    behaviors.push('has_comma');
+  // Comment on special characters in URL (commas, brackets, pipes, etc.)
+  if (next.flags.hasSpecialChars) {
+    behaviors.push('has_special_chars');
   }
 
   return behaviors;

@@ -55,7 +55,8 @@ export interface UrlFlags {
   hasSwearwords?: boolean;
   isShort?: boolean;
   dotWithoutTld?: boolean;
-  hasComma?: boolean;
+  hasSpecialChars?: boolean;
+  specialCharsFound?: string[];
 }
 
 export interface InputState {

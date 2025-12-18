@@ -78,10 +78,10 @@
         "Dot without TLD? Incomplete. Finish what you started.",
         "You have a dot but no ending? That's half a URL, honey."
       ],
-      "has_comma": [
-        "A comma in a URL? Fancy. API calls, I see you.",
-        "Commas in the URL? Someone's passing arrays. Technical queen.",
-        "Comma-separated values in a URL? That's giving developer energy, honey."
+      "has_special_chars": [
+        "Special characters in a URL? Fancy. Someone's getting technical.",
+        "Brackets, commas, pipes... who hurt you? That URL is wild, honey.",
+        "Special chars detected. Either you're a developer or you copy-pasted chaos."
       ]
     },
     "valid": {
@@ -204,10 +204,10 @@
         "Incomplete TLD. Finish it. Or don't.",
         "Dot without ending. Incomplete."
       ],
-      "has_comma": [
-        "Comma in URL. API stuff, I guess.",
-        "Commas. Multiple values. Whatever.",
-        "Comma-separated params. Cool."
+      "has_special_chars": [
+        "Special characters. API stuff, I guess.",
+        "Brackets, commas, whatever. Fine.",
+        "Special chars in URL. Expected nothing less."
       ]
     },
     "valid": {
@@ -329,10 +329,10 @@
         "Bruh, incomplete TLD. Finish it.",
         "Bruh, dot without ending. Complete it, bruh."
       ],
-      "has_comma": [
-        "Bruh, comma in the URL. API vibes.",
-        "Bruh, commas? Passing arrays or something?",
-        "Bruh, comma-separated stuff. Developer mode, bruh."
+      "has_special_chars": [
+        "Bruh, special characters in there. API vibes.",
+        "Bruh, brackets and stuff? Developer mode, bruh.",
+        "Bruh, special chars in the URL. Technical, bruh."
       ]
     },
     "valid": {
@@ -454,10 +454,10 @@
         "Bro, incomplete TLD. Complete it, bro.",
         "Bro, dot but no ending. Finish it."
       ],
-      "has_comma": [
-        "Bro, comma in the URL. API grind mode.",
-        "Bro, commas in there. Passing multiple values. That's advanced.",
-        "Bro, comma-separated params. Developer energy right there."
+      "has_special_chars": [
+        "Bro, special characters in there. API grind mode.",
+        "Bro, brackets, commas, pipes. That's advanced, bro.",
+        "Bro, special chars in the URL. Developer energy right there."
       ]
     },
     "valid": {
@@ -579,10 +579,10 @@
         "INCOMPLETE TLD! 💥 Complete it and party!",
         "DOT BUT NO ENDING! 🎉 Finish it!"
       ],
-      "has_comma": [
-        "COMMA IN THE URL! 🎉 API PARTY MODE!",
-        "COMMAS! 🔥 Multiple values! DEVELOPER CELEBRATION!",
-        "COMMA-SEPARATED PARAMS! 💥 That's the technical energy!"
+      "has_special_chars": [
+        "SPECIAL CHARACTERS! 🎉 API PARTY MODE!",
+        "BRACKETS! COMMAS! PIPES! 🔥 DEVELOPER CELEBRATION!",
+        "SPECIAL CHARS IN THE URL! 💥 That's the technical energy!"
       ]
     },
     "valid": {
@@ -704,10 +704,10 @@
         "Incomplete TLD. Finish it when you're ready.",
         "Dot but no ending. Complete it and you're set."
       ],
-      "has_comma": [
-        "Comma in the URL. API stuff, nice.",
-        "Commas in there. Passing multiple values, I see.",
-        "Comma-separated params. Developer vibes."
+      "has_special_chars": [
+        "Special characters in there. API stuff, nice.",
+        "Brackets, commas, that kind of thing. Developer vibes.",
+        "Special chars in the URL. Technical, I like it."
       ]
     },
     "valid": {
@@ -829,10 +829,10 @@
         "Incomplete TLD? Finish it and you'll be perfect! ✨",
         "Dot but no ending? Complete it and you're amazing! 🌸"
       ],
-      "has_comma": [
-        "A comma in the URL! You're doing API stuff! So smart! 💖",
-        "Commas in there! Passing multiple values! That's impressive! ✨",
-        "Comma-separated params! You're such a developer! 🌟"
+      "has_special_chars": [
+        "Special characters in the URL! You're doing technical stuff! So smart! 💖",
+        "Brackets, commas, all that! That's impressive! ✨",
+        "Special chars! You're such a developer! I believe in you! 🌟"
       ]
     },
     "valid": {

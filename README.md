@@ -63,7 +63,7 @@ The personality system changes mood depending on the day of the week:
 
 ### Smart Detection
 
-As a QA engineer, I wanted to go deep on URL verification. The system analyzes a ridiculous number of URL characteristics — zero-width Unicode characters, invisible whitespace variants, missing or malformed TLDs, trailing dots without extensions, HTTP in 2025, custom port numbers, raw IP addresses instead of domains, UTM tracking bloat, suspiciously long query strings, URLs that are ironically shorter than our shortened version, login and admin page patterns, potential injection vectors, and even swear words. The difference is: instead of blocking you or throwing validation errors, we just roast you and let you do whatever you want anyway. It's QA-level scrutiny with zero gatekeeping. Your URL, your choice.
+As a QA engineer, I wanted to go deep on URL verification. The system analyzes a ridiculous number of URL characteristics — zero-width Unicode characters, invisible whitespace variants, missing or malformed TLDs, trailing dots without extensions, HTTP in 2025, custom port numbers, raw IP addresses instead of domains, UTM tracking bloat, suspiciously long query strings, URLs that are ironically shorter than our shortened version, login and admin page patterns, special characters (commas, brackets, pipes, quotes, backticks), and even swear words. The difference is: instead of blocking you or throwing validation errors, we just roast you and let you do whatever you want anyway. It's QA-level scrutiny with zero gatekeeping. Your URL, your choice.
 
 | What It Catches | Example |
 |-----------------|---------|
@@ -72,6 +72,7 @@ As a QA engineer, I wanted to go deep on URL verification. The system analyzes a
 | Trailing Dot | `example.` with nothing after it |
 | Spaces in URL | URLs can't have spaces, use `%20` |
 | Invisible Characters | Zero-width Unicode, hair spaces, em spaces |
+| Special Characters | Commas, brackets `[]{}`, pipes `\|`, quotes, backticks |
 | HTTP in 2025 | Using `http://` like it's 1999 |
 | Custom Ports | Developer detected! (`:8080`, `:3000`) |
 | IP Addresses | Using `192.168.1.1` instead of a domain |
