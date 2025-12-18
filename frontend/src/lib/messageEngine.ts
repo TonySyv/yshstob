@@ -36,8 +36,8 @@ function endsWithPunctuation(msg: string): boolean {
  * Context-aware combination templates for common pairs
  */
 function getContextualCombination(
-  msg1: string,
-  msg2: string,
+  _msg1: string,
+  _msg2: string,
   behavior1: BehaviorType,
   behavior2: BehaviorType,
   mood: MoodType
@@ -337,8 +337,9 @@ export function pickMessage(
   );
   
   for (const behavior of sortedBehaviors) {
-    if (moodPack.behavior[behavior]) {
-      const messages = moodPack.behavior[behavior];
+    const behaviorRecord = moodPack.behavior as Record<string, string[] | undefined>;
+    if (behaviorRecord[behavior]) {
+      const messages = behaviorRecord[behavior];
       if (messages && messages.length > 0) {
         behaviorMessages.push(random(messages));
         behaviorTypes.push(behavior);

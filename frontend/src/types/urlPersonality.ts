@@ -16,7 +16,10 @@ export type BehaviorType =
   | 'has_port'
   | 'has_swearwords'
   | 'dot_without_tld'
-  | 'using_http';
+  | 'using_http'
+  | 'too_short'
+  | 'typing'
+  | 'started_typing';
 
 export type PatternType =
   | 'missingTld'

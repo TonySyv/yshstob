@@ -56,7 +56,7 @@ export function getUrlFlags(parsed: URL | null, rawInput: string = ''): UrlFlags
     const hasSpacesFlag = /\s/.test(trimmedInput);
     const hasInvisibleCharsFlag = hasInvisibleChars(rawInput); // Check original for invisible chars
     const portMatch = rawInput.match(/:(\d+)/);
-    const hasPort = !!portMatch && portMatch[1] && portMatch[1].length > 0;
+    const hasPort = Boolean(portMatch && portMatch[1] && portMatch[1].length > 0);
     const hasSwearwordsFlag = hasSwearwords(rawInput);
     // Don't mark as short if invalid - we only roast valid short URLs
     const isShort = false;
@@ -75,7 +75,8 @@ export function getUrlFlags(parsed: URL | null, rawInput: string = ''): UrlFlags
   }
 
   const hostname = parsed.hostname;
-  const hasTld = hostname.includes('.') && hostname.split('.').pop() && hostname.split('.').pop()!.length >= 2;
+  const lastPart = hostname.split('.').pop();
+  const hasTld = Boolean(hostname.includes('.') && lastPart && lastPart.length >= 2);
   const isIp = /^[0-9.]+$/.test(hostname);
   const isLocalhost = hostname.toLowerCase() === 'localhost' || hostname.startsWith('localhost:');
   
@@ -91,7 +92,7 @@ export function getUrlFlags(parsed: URL | null, rawInput: string = ''): UrlFlags
   const hasSpacesFlag = /\s/.test(trimmedInput);
   const hasInvisibleCharsFlag = hasInvisibleChars(rawInput); // Check original for invisible chars
   const portMatch = rawInput.match(/:(\d+)/);
-  const hasPort = !!portMatch && portMatch[1] && portMatch[1].length > 0;
+  const hasPort = Boolean(portMatch && portMatch[1] && portMatch[1].length > 0);
   const hasSwearwordsFlag = hasSwearwords(rawInput);
   // Only mark as short if valid - we're roasting about shortening, not validity
   const isShort = isValid && rawInput.length > 0 && rawInput.length < 30;

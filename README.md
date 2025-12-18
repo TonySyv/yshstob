@@ -59,12 +59,11 @@ The personality system changes mood depending on the day of the week:
 
 - **URL Shortening** — Turn monster URLs into clean, shareable links
 - **Real-time Metrics** — Track redirect speeds and total redirects via the Speedometer
-- **Dark Mode** — Easy on the eyes, day or night
 - **Responsive** — Works on desktop and mobile
 
 ### Smart Detection
 
-As a QA engineer, I wanted to go deep on URL verification. The system analyzes a ridiculous number of URL characteristics — zero-width Unicode characters, invisible whitespace variants, missing or malformed TLDs, trailing dots without extensions, HTTP in 2025, custom port numbers, raw IP addresses instead of domains, UTM tracking bloat, suspiciously long query strings, URLs that are ironically shorter than our shortened version, login and admin page patterns, potential injection vectors, and yes, even swear words. The difference is: instead of blocking you or throwing validation errors, we just roast you and let you do whatever you want anyway. It's QA-level scrutiny with zero gatekeeping. Your URL, your choice.
+As a QA engineer, I wanted to go deep on URL verification. The system analyzes a ridiculous number of URL characteristics — zero-width Unicode characters, invisible whitespace variants, missing or malformed TLDs, trailing dots without extensions, HTTP in 2025, custom port numbers, raw IP addresses instead of domains, UTM tracking bloat, suspiciously long query strings, URLs that are ironically shorter than our shortened version, login and admin page patterns, potential injection vectors, and even swear words. The difference is: instead of blocking you or throwing validation errors, we just roast you and let you do whatever you want anyway. It's QA-level scrutiny with zero gatekeeping. Your URL, your choice.
 
 | What It Catches | Example |
 |-----------------|---------|
