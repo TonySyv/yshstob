@@ -17,6 +17,7 @@ export type BehaviorType =
   | 'has_swearwords'
   | 'dot_without_tld'
   | 'using_http'
+  | 'has_special_chars'
   | 'too_short'
   | 'typing'
   | 'started_typing';
@@ -54,6 +55,7 @@ export interface UrlFlags {
   hasSwearwords?: boolean;
   isShort?: boolean;
   dotWithoutTld?: boolean;
+  hasComma?: boolean;
 }
 
 export interface InputState {

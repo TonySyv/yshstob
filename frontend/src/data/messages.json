@@ -77,6 +77,11 @@
         "A dot but no TLD? That's like a sentence without punctuation.",
         "Dot without TLD? Incomplete. Finish what you started.",
         "You have a dot but no ending? That's half a URL, honey."
+      ],
+      "has_comma": [
+        "A comma in a URL? Fancy. API calls, I see you.",
+        "Commas in the URL? Someone's passing arrays. Technical queen.",
+        "Comma-separated values in a URL? That's giving developer energy, honey."
       ]
     },
     "valid": {
@@ -198,6 +203,11 @@
         "Dot but no TLD. That's incomplete. Finish it.",
         "Incomplete TLD. Finish it. Or don't.",
         "Dot without ending. Incomplete."
+      ],
+      "has_comma": [
+        "Comma in URL. API stuff, I guess.",
+        "Commas. Multiple values. Whatever.",
+        "Comma-separated params. Cool."
       ]
     },
     "valid": {
@@ -318,6 +328,11 @@
         "Bruh, dot but no TLD? Come on.",
         "Bruh, incomplete TLD. Finish it.",
         "Bruh, dot without ending. Complete it, bruh."
+      ],
+      "has_comma": [
+        "Bruh, comma in the URL. API vibes.",
+        "Bruh, commas? Passing arrays or something?",
+        "Bruh, comma-separated stuff. Developer mode, bruh."
       ]
     },
     "valid": {
@@ -438,6 +453,11 @@
         "Bro, dot without TLD? Finish the job.",
         "Bro, incomplete TLD. Complete it, bro.",
         "Bro, dot but no ending. Finish it."
+      ],
+      "has_comma": [
+        "Bro, comma in the URL. API grind mode.",
+        "Bro, commas in there. Passing multiple values. That's advanced.",
+        "Bro, comma-separated params. Developer energy right there."
       ]
     },
     "valid": {
@@ -558,6 +578,11 @@
         "DOT WITHOUT TLD! 🎯 Finish it!",
         "INCOMPLETE TLD! 💥 Complete it and party!",
         "DOT BUT NO ENDING! 🎉 Finish it!"
+      ],
+      "has_comma": [
+        "COMMA IN THE URL! 🎉 API PARTY MODE!",
+        "COMMAS! 🔥 Multiple values! DEVELOPER CELEBRATION!",
+        "COMMA-SEPARATED PARAMS! 💥 That's the technical energy!"
       ]
     },
     "valid": {
@@ -678,6 +703,11 @@
         "Dot without TLD? Add the TLD and you're good.",
         "Incomplete TLD. Finish it when you're ready.",
         "Dot but no ending. Complete it and you're set."
+      ],
+      "has_comma": [
+        "Comma in the URL. API stuff, nice.",
+        "Commas in there. Passing multiple values, I see.",
+        "Comma-separated params. Developer vibes."
       ]
     },
     "valid": {
@@ -798,6 +828,11 @@
         "Dot without TLD? Add the TLD and you'll be all set! 💖",
         "Incomplete TLD? Finish it and you'll be perfect! ✨",
         "Dot but no ending? Complete it and you're amazing! 🌸"
+      ],
+      "has_comma": [
+        "A comma in the URL! You're doing API stuff! So smart! 💖",
+        "Commas in there! Passing multiple values! That's impressive! ✨",
+        "Comma-separated params! You're such a developer! 🌟"
       ]
     },
     "valid": {

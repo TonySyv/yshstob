@@ -71,6 +71,7 @@ export function getUrlFlags(parsed: URL | null, rawInput: string = ''): UrlFlags
       hasSwearwords: hasSwearwordsFlag,
       isShort,
       dotWithoutTld,
+      hasComma: rawInput.includes(','),
     };
   }
 
@@ -119,6 +120,7 @@ export function getUrlFlags(parsed: URL | null, rawInput: string = ''): UrlFlags
     hasSwearwords: hasSwearwordsFlag,
     isShort,
     dotWithoutTld,
+    hasComma: rawInput.includes(','),
   };
 }
 
