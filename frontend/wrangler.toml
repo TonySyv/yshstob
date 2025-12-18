@@ -1,0 +1,19 @@
+# Cloudflare Pages configuration
+# This file configures KV bindings and environment variables for Pages Functions
+
+name = "yshstob"
+compatibility_date = "2025-01-01"
+
+# Pages-specific settings
+pages_build_output_dir = "dist"
+
+# KV Namespace bindings (same as redirect-worker)
+[[kv_namespaces]]
+binding = "KV_URLS"
+id = "3efb8902d43f4765b68efa9e9016e16a"
+preview_id = "6616768330f04b4c91b297337d594d1a"
+
+# Environment variables
+# ANALYTICS_WORKER_URL should be set in Cloudflare Dashboard > Pages > Settings > Environment variables
+# Value: https://analytics-worker.tony-syv.workers.dev
+
