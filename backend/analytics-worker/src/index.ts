@@ -29,9 +29,6 @@ interface Counters {
 }
 
 interface SpeedometerResponse {
-  version: string;
-  deploy_timestamp: string;
-  commit_summary: string;
   total_redirects: number;
   average_redirect_ms: number;
 }
@@ -202,9 +199,6 @@ async function handleSpeedometer(env: Env): Promise<Response> {
     const averageMs = computeAverage(counters.total_ms, counters.total_redirects);
 
     const response: SpeedometerResponse = {
-      version: counters.version,
-      deploy_timestamp: counters.deploy_timestamp,
-      commit_summary: counters.commit_summary,
       total_redirects: counters.total_redirects,
       average_redirect_ms: Math.round(averageMs * 1000) / 1000, // Round to 3 decimal places
     };

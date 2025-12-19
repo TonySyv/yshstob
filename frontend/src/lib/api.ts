@@ -13,9 +13,10 @@ export interface ShortUrlResponse {
 export interface SpeedometerData {
   average_redirect_ms: number;
   total_redirects: number;
-  version: string;
-  deploy_timestamp: string;
-  commit_summary: string;
+}
+
+export interface UrlCountResponse {
+  count: number;
 }
 
 /**
@@ -54,5 +55,25 @@ export async function getSpeedometerData(): Promise<SpeedometerData> {
   }
 
   return response.json();
+}
+
+/**
+ * Get the count of URLs in the database
+ */
+export async function getUrlCount(): Promise<number> {
+  const response = await fetch('/api/url-count', {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch URL count: ${response.statusText}`);
+  }
+
+  const data: UrlCountResponse = await response.json();
+  return data.count;
 }
 
