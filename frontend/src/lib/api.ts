@@ -41,9 +41,22 @@ export async function createShortUrl(
 
 /**
  * Get speedometer metrics from Analytics Worker
+ * Uses proxy route /speedometer which forwards to the analytics worker
  */
 export async function getSpeedometerData(): Promise<SpeedometerData> {
-  const response = await analyticsApi.get<SpeedometerData>('/speedometer');
-  return response.data;
+  // Use relative URL to go through Pages Function proxy
+  // This works even if VITE_ANALYTICS_URL is not set
+  const response = await fetch('/speedometer', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch speedometer data: ${response.statusText}`);
+  }
+
+  return response.json();
 }
 

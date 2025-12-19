@@ -14,7 +14,8 @@ export default function Speedometer() {
         const metrics = await getSpeedometerData();
         setData(metrics);
       } catch (err: any) {
-        setError(err.response?.data?.message || 'Failed to load metrics. Please try again.');
+        const errorMessage = err.message || err.response?.data?.message || 'Failed to load metrics. Please try again.';
+        setError(errorMessage);
         console.error('Error fetching speedometer data:', err);
       } finally {
         setIsLoading(false);
