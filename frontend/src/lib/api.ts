@@ -44,6 +44,7 @@ export async function getSpeedometerData(): Promise<SpeedometerData> {
   const response = await fetch('/speedometer', {
     method: 'GET',
     headers: {
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
   });

@@ -37,6 +37,17 @@ export const onRequestOptions: PagesFunction<Env> = async () => {
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   const { request, env } = context;
 
+  // Check if this is an API request (Accept: application/json) or browser navigation (Accept: text/html)
+  const acceptHeader = request.headers.get('Accept') || '';
+  const isApiRequest = acceptHeader.includes('application/json') || 
+                       request.headers.get('Content-Type')?.includes('application/json');
+
+  // If it's a browser navigation request, let it pass through to the React app
+  if (!isApiRequest && acceptHeader.includes('text/html')) {
+    return context.next();
+  }
+
+  // Otherwise, proxy API request to analytics worker
   const analyticsUrl = env.ANALYTICS_WORKER_URL;
   if (!analyticsUrl) {
     return addCorsHeaders(new Response(
