@@ -5,11 +5,6 @@ const redirectApi = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || '',
 });
 
-// Axios instance for Analytics Worker
-const analyticsApi = axios.create({
-  baseURL: import.meta.env.VITE_ANALYTICS_URL || '',
-});
-
 export interface ShortUrlResponse {
   shortUrl: string;
   longUrl: string;
