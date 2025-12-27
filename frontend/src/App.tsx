@@ -21,12 +21,9 @@ function App() {
           </div>
         </div>
       </nav>
-      <main className="flex-1">
+      <main className="flex-1 flex flex-col">
         <Outlet />
       </main>
-      <footer className="py-6 text-center text-gray-600 dark:text-gray-400">
-        <p className="text-sm">yshstob - URL Shortener</p>
-      </footer>
     </div>
   );
 }

@@ -44,7 +44,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start px-4 pt-6 sm:pt-12 pb-12 relative">
+    <div className="flex-1 flex flex-col items-center justify-center px-4 py-6 sm:py-8 relative">
       <div className="w-full max-w-2xl">
         <div className="text-center mb-6 sm:mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-1.5">
