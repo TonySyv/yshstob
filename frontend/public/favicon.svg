@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" fill="#4F46E5" stroke="#6366F1" stroke-width="2"/>
+  
+  <!-- Link/chain icon representing URL shortening -->
+  <g transform="translate(50, 50)">
+    <!-- First link -->
+    <ellipse cx="-20" cy="0" rx="12" ry="18" fill="none" stroke="#FBBF24" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="-20" cy="0" rx="12" ry="18" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    
+    <!-- Middle link (connecting) -->
+    <ellipse cx="0" cy="0" rx="12" ry="18" fill="none" stroke="#FBBF24" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="0" cy="0" rx="12" ry="18" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    
+    <!-- Second link (shorter) -->
+    <ellipse cx="20" cy="0" rx="8" ry="12" fill="none" stroke="#FBBF24" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="20" cy="0" rx="8" ry="12" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    
+    <!-- Arrow pointing right (showing shortening direction) -->
+    <path d="M 30 0 L 38 -4 M 30 0 L 38 4" stroke="#FBBF24" stroke-width="3" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>
+

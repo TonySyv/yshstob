@@ -162,10 +162,16 @@ yshstob/
 
 - Node.js 18+
 - npm or yarn
-- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/) (for backend)
+- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/) (for backend and Pages Functions)
 - Cloudflare account (for deployment)
 
-### Frontend Setup
+### Local Development Setup
+
+**Important**: The redirect logic has been migrated from a standalone worker to **Cloudflare Pages Functions** (located in `frontend/functions/`). This affects local development setup.
+
+#### Option 1: Frontend Only (UI Development)
+
+For frontend-only work (no API testing):
 
 ```bash
 # Navigate to frontend
@@ -179,6 +185,64 @@ npm run dev
 ```
 
 The frontend will be available at `http://localhost:5173`
+
+**Note**: API endpoints won't work in this mode. Use this for UI-only development.
+
+#### Option 2: Full Stack (Recommended for Testing)
+
+For full local development including API endpoints:
+
+**Terminal 1 - Analytics Worker:**
+```bash
+cd backend/analytics-worker
+npm install
+npm run dev
+```
+This starts the analytics worker on `http://localhost:8787` (or similar)
+
+**Terminal 2 - Frontend + Pages Functions:**
+```bash
+cd frontend
+npm install
+npm run build    # Build frontend first
+npx wrangler pages dev dist --kv=KV_URLS --env ANALYTICS_WORKER_URL=http://localhost:8787
+```
+
+This starts the frontend with Pages Functions on `http://localhost:8788` (or similar, Wrangler will show the exact URL).
+
+**Key Points:**
+- **Pages Functions** (URL shortening/redirect logic) are now part of the frontend, not a separate worker
+- You must build the frontend (`npm run build`) before running `wrangler pages dev`
+- KV bindings are configured in `frontend/wrangler.toml`
+- Set `ANALYTICS_WORKER_URL` to your local analytics worker URL (or production URL if not running locally)
+
+#### Environment Variables for Local Development
+
+When running `wrangler pages dev`, pass environment variables:
+```bash
+npx wrangler pages dev dist --kv=KV_URLS --env ANALYTICS_WORKER_URL=http://localhost:8787
+```
+
+Or set in your shell:
+```powershell
+# PowerShell
+$env:ANALYTICS_WORKER_URL="http://localhost:8787"
+npx wrangler pages dev dist --kv=KV_URLS
+```
+
+```bash
+# Bash
+export ANALYTICS_WORKER_URL=http://localhost:8787
+npx wrangler pages dev dist --kv=KV_URLS
+```
+
+### Quick Reference
+
+| Component | Local Command | Port |
+|-----------|--------------|------|
+| Frontend only | `cd frontend && npm run dev` | 5173 |
+| Analytics Worker | `cd backend/analytics-worker && npm run dev` | 8787 |
+| Frontend + Pages Functions | `cd frontend && npm run build && npx wrangler pages dev dist --kv=KV_URLS` | 8788 |
 
 ### Deployment
 

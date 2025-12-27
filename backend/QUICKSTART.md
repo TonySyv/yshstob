@@ -2,63 +2,64 @@
 
 ## Production (Already Deployed)
 
-The backend workers are **already deployed and running** on Cloudflare:
+The analytics worker is **already deployed and running** on Cloudflare:
 
-- **Redirect Worker**: https://redirect-worker.tony-syv.workers.dev
 - **Analytics Worker**: https://analytics-worker.tony-syv.workers.dev
 
-No need to start anything - they're live and ready to use!
+**Note**: The redirect logic has been migrated to **Cloudflare Pages Functions** (located in `frontend/functions/`). It's no longer a standalone worker and deploys automatically with the frontend.
+
+No need to start anything - it's live and ready to use!
 
 ---
 
 ## Local Development
 
-To run the workers locally for testing and development:
+### Architecture Overview
 
-### Option 1: Run Both Workers (Recommended)
+- **Analytics Worker**: Standalone Cloudflare Worker (runs separately)
+- **URL Shortening & Redirects**: Now runs as **Pages Functions** in `frontend/functions/` (not a separate worker)
 
-**Terminal 1 - Analytics Worker:**
+### Running Locally
+
+For full local development, you need to run:
+
+1. **Analytics Worker** (if you need to test analytics):
 ```powershell
 cd backend/analytics-worker
 npm run dev
 ```
 This will start the analytics worker on `http://localhost:8787` (or similar)
 
-**Terminal 2 - Redirect Worker:**
+2. **Frontend with Pages Functions** (includes URL shortening/redirect logic):
 ```powershell
-cd backend/redirect-worker
-npm run dev
-```
-This will start the redirect worker on `http://localhost:8788` (or similar)
-
-**Important**: When running locally, you need to set the `ANALYTICS_WORKER_URL` environment variable. You can either:
-- Set it in your shell: `$env:ANALYTICS_WORKER_URL="http://localhost:8787"`
-- Or update the frontend `.env` to point to local URLs for local development
-
-### Option 2: Run Individual Workers
-
-**Start Analytics Worker only:**
-```powershell
-cd backend/analytics-worker
-npm run dev
+cd frontend
+npm run build          # Build the frontend first
+npx wrangler pages dev dist --kv=KV_URLS --env ANALYTICS_WORKER_URL=http://localhost:8787
 ```
 
-**Start Redirect Worker only:**
-```powershell
-cd backend/redirect-worker
-npm run dev
-```
+**Important**: 
+- The Pages Functions (redirect logic) are now part of the frontend deployment
+- You need to build the frontend first (`npm run build`) before running `wrangler pages dev`
+- Set `ANALYTICS_WORKER_URL` environment variable when running Pages Functions locally
+- KV bindings are configured in `frontend/wrangler.toml`
 
 ### Local Development URLs
 
-When running locally, Wrangler will show you the local URLs, typically:
-- Analytics Worker: `http://localhost:8787`
-- Redirect Worker: `http://localhost:8788`
+When running locally:
+- Analytics Worker: `http://localhost:8787` (if running)
+- Frontend + Pages Functions: `http://localhost:8788` (or similar, Wrangler will show the exact URL)
 
-Update your frontend `.env` file to use these local URLs for local development:
+### Environment Variables for Local Development
+
+When running `wrangler pages dev`, you can pass environment variables:
+```powershell
+npx wrangler pages dev dist --kv=KV_URLS --env ANALYTICS_WORKER_URL=http://localhost:8787
 ```
-VITE_API_BASE_URL=http://localhost:8788
-VITE_ANALYTICS_URL=http://localhost:8787
+
+Or set them in your shell before running:
+```powershell
+$env:ANALYTICS_WORKER_URL="http://localhost:8787"
+npx wrangler pages dev dist --kv=KV_URLS
 ```
 
 ---
@@ -67,22 +68,33 @@ VITE_ANALYTICS_URL=http://localhost:8787
 
 ### Development
 ```powershell
-# From backend/redirect-worker or backend/analytics-worker
+# Analytics Worker (standalone)
+cd backend/analytics-worker
 npm run dev          # Start local development server
+
+# Frontend + Pages Functions
+cd frontend
+npm run build        # Build frontend first
+npx wrangler pages dev dist --kv=KV_URLS --env ANALYTICS_WORKER_URL=http://localhost:8787
 ```
 
 ### Deployment
 ```powershell
-# From backend/redirect-worker or backend/analytics-worker
+# Analytics Worker (standalone)
+cd backend/analytics-worker
 npm run deploy       # Deploy to Cloudflare (wrangler deploy)
+
+# Frontend + Pages Functions deploy automatically via Cloudflare Pages
+# (when you push to main branch, if connected to GitHub)
 ```
 
 ---
 
 ## Notes
 
-- **Production workers are always running** - no server to start
-- **Local dev mode** uses Wrangler's local runtime (not the actual Cloudflare edge)
-- **KV namespaces** work in local dev mode (Wrangler connects to your Cloudflare KV)
-- **Secrets** (like `ANALYTICS_WORKER_URL`) need to be set separately for local dev
+- **Production**: Analytics worker is always running, Pages Functions deploy automatically with frontend
+- **Local dev mode**: Uses Wrangler's local runtime (not the actual Cloudflare edge)
+- **KV namespaces**: Work in local dev mode (Wrangler connects to your Cloudflare KV)
+- **Pages Functions**: The redirect logic is now in `frontend/functions/`, not a separate worker
+- **Environment variables**: Need to be set separately for local dev (use `--env` flag or shell variables)
 
