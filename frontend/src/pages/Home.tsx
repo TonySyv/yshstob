@@ -44,8 +44,8 @@ export default function Home() {
   };
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-start px-4 sm:px-6 md:px-8 lg:px-12 pt-4 sm:pt-6 pb-6 sm:pb-8 relative">
-      <div className="w-full max-w-2xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl">
+    <div className="flex-1 flex flex-col items-center justify-start px-4 sm:px-6 pt-4 sm:pt-6 pb-6 sm:pb-8 relative">
+      <div className="w-full max-w-2xl md:max-w-3xl">
         <div className="text-center mb-6 sm:mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-1.5">
             URL Shortener

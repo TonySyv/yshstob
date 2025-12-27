@@ -79,7 +79,7 @@ export default function UrlInput({ onSubmit, isLoading = false }: UrlInputProps)
     <form onSubmit={handleSubmit} className="w-full">
       <div className="flex flex-col gap-2">
         {/* Unified Input Field */}
-        <div className="flex items-center gap-0 rounded-xl border border-gray-200 dark:border-gray-700 focus-within:ring-2 focus-within:ring-blue-500/50 focus-within:border-blue-500/50 bg-white dark:bg-gray-800 transition-all overflow-hidden relative shadow-sm">
+        <div className="flex items-center gap-0 rounded-lg border border-gray-200 dark:border-gray-700 focus-within:ring-2 focus-within:ring-blue-500/30 focus-within:border-blue-500/50 bg-white dark:bg-gray-800 transition-all overflow-hidden relative shadow-sm">
           <input
             ref={inputRef}
             type="text"
@@ -87,7 +87,7 @@ export default function UrlInput({ onSubmit, isLoading = false }: UrlInputProps)
             onChange={handleInputChange}
             onPaste={handlePaste}
             placeholder="https://example.com/path"
-            className="w-full px-4 py-3 bg-transparent border-0 focus:outline-none text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 text-sm"
+            className="w-full px-4 py-2.5 bg-transparent border-0 focus:outline-none text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 text-sm"
             disabled={isLoading}
             autoComplete="off"
             spellCheck="false"
@@ -110,7 +110,7 @@ export default function UrlInput({ onSubmit, isLoading = false }: UrlInputProps)
                 initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-300 dark:border-zinc-600 rounded-lg px-4 py-3 text-zinc-700 dark:text-zinc-200 text-sm"
+                className="bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3.5 py-2.5 text-zinc-700 dark:text-zinc-200 text-sm"
               >
                 <div className="flex items-start gap-2">
                   <motion.div
@@ -137,9 +137,9 @@ export default function UrlInput({ onSubmit, isLoading = false }: UrlInputProps)
         <motion.button
           type="submit"
           disabled={!canSubmit}
-          whileHover={canSubmit ? { scale: 1.02 } : {}}
-          whileTap={canSubmit ? { scale: 0.98 } : {}}
-          className="px-6 py-2.5 rounded-lg bg-stone-800 hover:bg-stone-900 active:bg-stone-950 dark:bg-stone-200 dark:hover:bg-white dark:active:bg-stone-100 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50 text-white dark:text-stone-900 text-sm font-medium transition-all duration-150 shadow-sm hover:shadow-md self-start flex items-center gap-2"
+          whileHover={canSubmit ? { scale: 1.01 } : {}}
+          whileTap={canSubmit ? { scale: 0.99 } : {}}
+          className="px-5 py-2 rounded-lg bg-stone-800 hover:bg-stone-900 active:bg-stone-950 dark:bg-stone-200 dark:hover:bg-white dark:active:bg-stone-100 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50 text-white dark:text-stone-900 text-sm font-medium transition-all duration-150 shadow-sm hover:shadow-md self-start flex items-center gap-2"
         >
           {isLoading ? (
             <>
