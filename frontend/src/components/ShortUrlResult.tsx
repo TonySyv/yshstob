@@ -44,7 +44,7 @@ export default function ShortUrlResult({ shortUrl, isConfirmed = true }: ShortUr
           <div className="flex items-end">
             <button
               onClick={handleCopy}
-              className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 flex items-center gap-2 ${
+              className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 flex items-center gap-2 min-w-[100px] ${
                 copied
                   ? 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-md'
                   : 'bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white shadow-sm hover:shadow-md dark:bg-gray-600 dark:hover:bg-gray-700 dark:active:bg-gray-800'
