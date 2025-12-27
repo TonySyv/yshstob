@@ -7,6 +7,7 @@ import type { UrlFlags, PatternType } from '../types/urlPersonality';
 /**
  * Parse URL using native browser URL() API
  * Attempts to parse as-is, then tries with https:// prefix if that fails
+ * Handles protocol-relative URLs (starting with //) by prepending https:
  */
 export function parseUrl(input: string): URL | null {
   const trimmed = input.trim();
@@ -15,6 +16,15 @@ export function parseUrl(input: string): URL | null {
   try {
     return new URL(trimmed);
   } catch {
+    // Handle protocol-relative URLs (starting with //)
+    if (trimmed.startsWith('//')) {
+      try {
+        return new URL('https:' + trimmed);
+      } catch {
+        return null;
+      }
+    }
+    // For other cases, try prepending https://
     try {
       return new URL('https://' + trimmed);
     } catch {

@@ -85,8 +85,8 @@ export default function ShortUrlResult({ shortUrl, isConfirmed = true }: ShortUr
     <>
       <div className="mt-5 w-full animate-[fadeIn_0.3s_ease-out]">
         <div className="p-4">
-          <div className="flex flex-col sm:flex-row gap-3">
-            <div className="flex-1 min-w-0 w-full">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <div className="flex-1 min-w-0">
               <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 mb-2 uppercase tracking-wider flex items-center gap-2">
                 Your short URL
                 {!isConfirmed && (
@@ -100,12 +100,16 @@ export default function ShortUrlResult({ shortUrl, isConfirmed = true }: ShortUr
                 )}
               </p>
               <div 
-                className="text-base font-mono text-gray-900 dark:text-gray-100 break-all cursor-text bg-gray-50 dark:bg-gray-900/50 rounded-md px-3 py-2 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-colors"
+                className="text-base font-mono text-gray-900 dark:text-gray-100 whitespace-nowrap overflow-x-auto cursor-text bg-gray-50 dark:bg-gray-900/50 rounded-md px-3 py-2 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-colors"
+                style={{
+                  scrollbarWidth: 'thin',
+                  scrollbarColor: 'rgba(156, 163, 175, 0.5) transparent'
+                }}
               >
                 {shortUrl}
               </div>
             </div>
-            <div className="flex items-end gap-2">
+            <div className="flex items-end gap-2 flex-shrink-0 sm:flex-shrink-0">
               <button
                 onClick={handleQRClick}
                 className="px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 flex items-center gap-2 bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white shadow-sm hover:shadow-md dark:bg-gray-600 dark:hover:bg-gray-700 dark:active:bg-gray-800"
